@@ -4,7 +4,7 @@ import Main from "../Layout/Main/Main";
 import Home from "../Pages/Dashboard/Home";
 import Users from "../Pages/Dashboard/Users";
 import ChangePassword from "../Pages/Auth/ChangePassword";
-import Subscription from "../Pages/Dashboard/Subscription";
+import Subscription from "../Pages/Dashboard/Earnings";
 import Profile from "../Pages/Dashboard/Profile";
 import ForgotPassword from "../Pages/Auth/ForgotPassword";
 import VerifyOtp from "../Pages/Auth/VerifyOtp";
@@ -16,10 +16,11 @@ import PrivacyPolicy from "../Pages/Dashboard/settings/PrivacyPolicy";
 import TermsAndConditions from "../Pages/Dashboard/settings/TermsAndCondition";
 import Login from "../Pages/Auth/Login";
 import FAQ from "../Pages/Dashboard/FAQ";
-import Services from "../Pages/Dashboard/Services";
-import Bookings from "../Pages/Dashboard/Bookings";
 import RefundAndReturnPolicy from "../Pages/Dashboard/settings/RefundAndReturnPolicy";
 import CookiesPolicy from "../Pages/Dashboard/settings/CookiesPolicy";
+import RetailShops from "../Pages/Dashboard/RetailShops";
+import OrdersList from "../Pages/Dashboard/OrdersList";
+import Earnings from "../Pages/Dashboard/Earnings";
 
 const router = createBrowserRouter([
   {
@@ -36,20 +37,20 @@ const router = createBrowserRouter([
         element: <Users />,
       },
       {
-        path: "/subscriptions",
-        element: <Subscription />,
+        path: "/earnings",
+        element: <Earnings />,
       },
       {
         path: "/faq",
         element: <FAQ />,
       },
       {
-        path: "/services",
-        element: <Services />,
+        path: "/retailShops",
+        element: <RetailShops />,
       },
       {
-        path: "/bookings",
-        element: <Bookings />,
+        path: "/orders",
+        element: <OrdersList />,
       },
       {
         path: "/settings/about-us",

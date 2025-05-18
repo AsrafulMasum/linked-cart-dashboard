@@ -319,7 +319,7 @@ const data = [
 
 const itemsPerPage = 10;
 
-const Users = () => {
+const OrdersList = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
 
@@ -533,4 +533,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default OrdersList;

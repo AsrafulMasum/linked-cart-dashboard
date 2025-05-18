@@ -171,7 +171,7 @@ const initialData = [
   },
 ];
 
-const Services = () => {
+const RetailShops = () => {
   const shopData = [
     {
       _id: "1",
@@ -408,4 +408,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default RetailShops;
