@@ -67,7 +67,7 @@ const Sidebar = () => {
         ),
       },
       {
-        key: "/subscriptions",
+        key: "/shopOwner",
         label: "Shop Owner",
         icon: (
           <img src={shopOwner} className="h-6" alt="Shop Owner icon" />

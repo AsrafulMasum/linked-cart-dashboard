@@ -21,6 +21,7 @@ import CookiesPolicy from "../Pages/Dashboard/settings/CookiesPolicy";
 import RetailShops from "../Pages/Dashboard/RetailShops";
 import OrdersList from "../Pages/Dashboard/OrdersList";
 import Earnings from "../Pages/Dashboard/Earnings";
+import ShopOwner from "../Pages/Dashboard/ShopOwner";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/orders",
         element: <OrdersList />,
+      },
+      {
+        path: "/shopOwner",
+        element: <ShopOwner />,
       },
       {
         path: "/settings/about-us",

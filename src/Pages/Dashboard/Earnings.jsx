@@ -1,7 +1,6 @@
 import { ConfigProvider, Modal, Select, Table } from "antd";
 import moment from "moment";
-import React, { useCallback, useMemo, useState } from "react";
-import { BsInfoCircle } from "react-icons/bs";
+import { useCallback, useMemo, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 
 const data = [
@@ -173,10 +172,6 @@ const Earnings = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
 
-  const handleChange = useCallback((val) => {
-    console.log(`selected ${val}`);
-  }, []);
-
   const handleInfoClick = useCallback((record) => {
     setValue(record);
   }, []);
@@ -211,7 +206,7 @@ const Earnings = () => {
         key: "email",
       },
       {
-        title: "Appt. Date",
+        title: "Date",
         dataIndex: "createdAt",
         key: "createdAt",
         render: (_, record) => <p>{moment(record?.createdAt).format("L")}</p>,
