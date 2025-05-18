@@ -57,7 +57,7 @@ const ResetPassword = () => {
                 border: "1px solid #757575",
                 height: "72px",
                 padding: "23px 16px",
-                background: "#B5D0CC",
+                background: "#E7F0EF",
                 borderRadius: "16px",
                 outline: "none",
               }}
@@ -109,7 +109,7 @@ const ResetPassword = () => {
                 border: "1px solid #757575",
                 height: "72px",
                 padding: "23px 16px",
-                background: "#B5D0CC",
+                background: "#E7F0EF",
                 borderRadius: "16px",
                 outline: "none",
               }}

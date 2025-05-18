@@ -65,8 +65,9 @@ const VerifyOtp = () => {
           <p
             onClick={handleResendEmail}
             style={{
-              color: "#F78F08",
+              color: "#757575",
               cursor: "pointer",
+              fontSize: "18px",
               fontWeight: "700",
               lineHeight: "150%",
               textDecoration: "underline",

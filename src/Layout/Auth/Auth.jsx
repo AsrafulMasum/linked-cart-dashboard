@@ -11,7 +11,7 @@ const Auth = () => {
     >
       <div
         style={{
-          background: "#B5D0CC",
+          background: "#E7F0EF",
           padding: "0 55px",
           borderRadius: 10,
           width: 800,
