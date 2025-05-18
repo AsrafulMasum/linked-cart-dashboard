@@ -2,14 +2,14 @@ import { ConfigProvider, Modal, Table } from "antd";
 import moment from "moment";
 import { useCallback, useMemo, useState } from "react";
 import deleteIcon from "../../assets/delete.svg";
-import { BsInfoCircle } from "react-icons/bs";
+import { IoEyeOutline } from "react-icons/io5";
 
 const initialData = [
   {
     key: "1",
     firstName: "John",
     lastName: "Doe",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "john.doe@example.com",
     mobileNumber: "+1234567890",
     createdAt: "2024-05-01T10:00:00Z",
@@ -18,7 +18,7 @@ const initialData = [
     key: "2",
     firstName: "Jane",
     lastName: "Smith",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "jane.smith@example.com",
     mobileNumber: "+1987654321",
     createdAt: "2024-06-15T08:30:00Z",
@@ -27,7 +27,7 @@ const initialData = [
     key: "3",
     firstName: "Alice",
     lastName: "Johnson",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "alice.johnson@example.com",
     mobileNumber: "+1112233445",
     createdAt: "2024-07-20T12:45:00Z",
@@ -36,7 +36,7 @@ const initialData = [
     key: "4",
     firstName: "Bob",
     lastName: "Williams",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "bob.williams@example.com",
     mobileNumber: "+1123456789",
     createdAt: "2024-03-18T14:00:00Z",
@@ -45,7 +45,7 @@ const initialData = [
     key: "5",
     firstName: "Emma",
     lastName: "Brown",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "emma.brown@example.com",
     mobileNumber: "+9988776655",
     createdAt: "2024-04-10T09:15:00Z",
@@ -54,7 +54,7 @@ const initialData = [
     key: "6",
     firstName: "Liam",
     lastName: "Davis",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "liam.davis@example.com",
     mobileNumber: "+5566778899",
     createdAt: "2024-01-25T17:30:00Z",
@@ -63,7 +63,7 @@ const initialData = [
     key: "7",
     firstName: "Olivia",
     lastName: "Garcia",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "olivia.garcia@example.com",
     mobileNumber: "+1234987654",
     createdAt: "2024-02-10T10:20:00Z",
@@ -72,7 +72,7 @@ const initialData = [
     key: "8",
     firstName: "Noah",
     lastName: "Martinez",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "noah.martinez@example.com",
     mobileNumber: "+7865432190",
     createdAt: "2024-08-08T11:00:00Z",
@@ -81,7 +81,7 @@ const initialData = [
     key: "9",
     firstName: "Sophia",
     lastName: "Rodriguez",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "sophia.rodriguez@example.com",
     mobileNumber: "+2223334444",
     createdAt: "2024-06-03T16:15:00Z",
@@ -90,7 +90,7 @@ const initialData = [
     key: "10",
     firstName: "James",
     lastName: "Lee",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "james.lee@example.com",
     mobileNumber: "+3216549870",
     createdAt: "2024-05-21T13:10:00Z",
@@ -99,7 +99,7 @@ const initialData = [
     key: "11",
     firstName: "Isabella",
     lastName: "Walker",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "isabella.walker@example.com",
     mobileNumber: "+6543219870",
     createdAt: "2024-01-05T15:00:00Z",
@@ -108,7 +108,7 @@ const initialData = [
     key: "12",
     firstName: "Ethan",
     lastName: "Hall",
-    category: "Home Service",
+    category: "Health & Wellness",
     email: "ethan.hall@example.com",
     mobileNumber: "+3456789012",
     createdAt: "2024-03-12T08:25:00Z",
@@ -117,7 +117,7 @@ const initialData = [
     key: "13",
     firstName: "Mia",
     lastName: "Allen",
-    category: "Home Service",
+    category: "Dining",
     email: "mia.allen@example.com",
     mobileNumber: "+4343434343",
     createdAt: "2024-09-01T09:45:00Z",
@@ -126,7 +126,7 @@ const initialData = [
     key: "14",
     firstName: "Alexander",
     lastName: "Young",
-    category: "Home Service",
+    category: "Dining",
     email: "alex.young@example.com",
     mobileNumber: "+6565656565",
     createdAt: "2024-02-22T07:30:00Z",
@@ -135,7 +135,7 @@ const initialData = [
     key: "15",
     firstName: "Charlotte",
     lastName: "Hernandez",
-    category: "Home Service",
+    category: "Dining",
     email: "charlotte.hernandez@example.com",
     mobileNumber: "+7778889990",
     createdAt: "2024-04-30T13:50:00Z",
@@ -144,7 +144,7 @@ const initialData = [
     key: "16",
     firstName: "Benjamin",
     lastName: "King",
-    category: "Home Service",
+    category: "Dining",
     email: "ben.king@example.com",
     mobileNumber: "+9090909090",
     createdAt: "2024-07-11T14:35:00Z",
@@ -153,7 +153,7 @@ const initialData = [
     key: "17",
     firstName: "Amelia",
     lastName: "Wright",
-    category: "Home Service",
+    category: "Dining",
     email: "amelia.wright@example.com",
     mobileNumber: "+8181818181",
     createdAt: "2024-10-09T10:05:00Z",
@@ -162,7 +162,7 @@ const initialData = [
     key: "18",
     firstName: "Lucas",
     lastName: "Lopez",
-    category: "Home Service",
+    category: "Dining",
     email: "lucas.lopez@example.com",
     mobileNumber: "+2323232323",
     createdAt: "2024-11-13T11:40:00Z",
@@ -171,7 +171,7 @@ const initialData = [
     key: "19",
     firstName: "Harper",
     lastName: "Scott",
-    category: "Home Service",
+    category: "Dining",
     email: "harper.scott@example.com",
     mobileNumber: "+5656565656",
     createdAt: "2024-12-01T09:30:00Z",
@@ -180,7 +180,7 @@ const initialData = [
     key: "20",
     firstName: "Henry",
     lastName: "Green",
-    category: "Home Service",
+    category: "Dining",
     email: "henry.green@example.com",
     mobileNumber: "+7878787878",
     createdAt: "2024-08-25T12:10:00Z",
@@ -225,7 +225,7 @@ const Users = () => {
         ),
       },
       {
-        title: "Service Type",
+        title: "Category",
         dataIndex: "category",
         key: "category",
       },
@@ -252,8 +252,8 @@ const Users = () => {
         align: "right",
         render: (_, record) => (
           <div className="flex justify-end gap-8">
-            <BsInfoCircle
-              className="text-lg text-[#F78F08] cursor-pointer"
+            <IoEyeOutline
+              className="text-2xl text-sub_title cursor-pointer"
               onClick={() => setValue(record)}
             />
             <img
@@ -275,7 +275,7 @@ const Users = () => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontSize: "25px", fontWeight: "normal" }}>User List</h2>
+        <h2 className="text-primary text-2xl font-semibold">User List</h2>
       </div>
 
       <ConfigProvider
@@ -315,7 +315,7 @@ const Users = () => {
               <p className="pb-[5px]">User Name</p>
               <p className="pb-[5px]">Email</p>
               <p className="pb-[5px]">Contact Number</p>
-              <p className="pb-[5px]">Service Type</p>
+              <p className="pb-[5px]">Category</p>
               <p>Start Date</p>
             </div>
             <div>

@@ -1,9 +1,8 @@
-import { Button, ConfigProvider, Modal, Table } from "antd";
-import  { useCallback, useMemo, useState } from "react";
-import deleteIcon from "../../assets/delete.svg";
+import { Button, Modal } from "antd";
+import { useCallback, useState } from "react";
+import addImg from "../../assets/addImg.svg";
+import shopImage from "../../assets/shopImage.png";
 import { PlusOutlined } from "@ant-design/icons";
-import { CiEdit } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
 
 const initialData = [
   {
@@ -173,15 +172,67 @@ const initialData = [
 ];
 
 const Services = () => {
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 10;
+  const shopData = [
+    {
+      _id: "1",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "2",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "3",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "4",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "5",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "6",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "7",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "8",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "9",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+    {
+      _id: "10",
+      name: "SwiftCart",
+      image: { shopImage },
+    },
+  ];
+
   const [data, setData] = useState(initialData);
-  const [value, setValue] = useState(null);
   const [openAddModel, setOpenAddModel] = useState(false);
-  const [form, setForm] = useState({ category: "", serviceType: "", serviceImage: "" });
-  const [imgURL, setImgURL] = useState();
-  const [showDelete, setShowDelete] = useState(false);
-  const [deleteId, setDeleteId] = useState("");
+  const [form, setForm] = useState({
+    category: "",
+    serviceType: "",
+    serviceImage: "",
+  });
+  const [imgURL, setImgURL] = useState("");
 
   // Handle image upload
   const onChange = useCallback((e) => {
@@ -191,9 +242,10 @@ const Services = () => {
       setImgURL(imgUrl);
       setForm((prev) => ({ ...prev, serviceImage: imgUrl }));
     }
+    e.target.value = "";
   }, []);
 
-  // Add new service
+  // Handle form submission
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -214,101 +266,6 @@ const Services = () => {
     [form, data]
   );
 
-  // Edit service
-  const handleEdit = useCallback(
-    (e) => {
-      e.preventDefault();
-      setData((prev) =>
-        prev.map((item) =>
-          item.key === value.key ? { ...item, ...form } : item
-        )
-      );
-      setValue(null);
-      setForm({ category: "", serviceType: "", serviceImage: "" });
-      setImgURL("");
-    },
-    [form, value, setData]
-  );
-
-  // Delete service
-  const handleDelete = useCallback(() => {
-    setData((prev) => prev.filter((item) => item.key !== deleteId));
-    setShowDelete(false);
-    setDeleteId("");
-  }, [deleteId]);
-
-  // Open edit modal and set form values
-  const openEditModal = useCallback((record) => {
-    setValue(record);
-    setForm({
-      category: record.category,
-      serviceType: record.serviceType,
-      serviceImage: record.serviceImage,
-    });
-    setImgURL(record.serviceImage);
-  }, []);
-
-  const columns = useMemo(
-    () => [
-      {
-        title: "Serial ID",
-        dataIndex: "name",
-        key: "name",
-        render: (_, __, index) => (
-          <p>{(page - 1) * itemsPerPage + index + 1}</p>
-        ),
-      },
-      {
-        title: "Category",
-        dataIndex: "category",
-        key: "category",
-      },
-      {
-        title: "Service Type",
-        dataIndex: "serviceType",
-        key: "serviceType",
-      },
-      {
-        title: "Service Image",
-        dataIndex: "serviceImage",
-        key: "serviceImage",
-        render: (_, record) => (
-          <div>
-            <img
-              className="h-6 w-6 object-cover"
-              src={record?.serviceImage}
-              alt=""
-            />
-          </div>
-        ),
-      },
-      {
-        title: "Actions",
-        dataIndex: "actions",
-        key: "actions",
-        align: "right",
-        render: (_, record) => (
-          <div className="flex justify-end gap-8">
-            <CiEdit
-              className="cursor-pointer text-2xl text-[#F78F08]"
-              onClick={() => openEditModal(record)}
-            />
-            <img
-              className="cursor-pointer"
-              onClick={() => {
-                setDeleteId(record?.key);
-                setShowDelete(true);
-              }}
-              src={deleteIcon}
-              alt="Delete Icon"
-            />
-          </div>
-        ),
-      },
-    ],
-    [page, itemsPerPage, openEditModal]
-  );
-
   return (
     <>
       <div
@@ -320,16 +277,7 @@ const Services = () => {
           marginBottom: "20px",
         }}
       >
-        <h3
-          style={{
-            color: "#333333",
-            fontSize: 24,
-            fontWeight: "500",
-            lineHeight: "24px",
-          }}
-        >
-          Services
-        </h3>
+        <h2 className="text-primary text-2xl font-semibold">Retail Shops</h2>
         <div>
           <Button
             onClick={() => {
@@ -357,30 +305,14 @@ const Services = () => {
         </div>
       </div>
 
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              itemActiveBg: "#0F665A",
-              borderRadius: "100%",
-            },
-          },
-          token: {
-            colorPrimary: "white",
-          },
-        }}
-      >
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            current: page,
-            pageSize: itemsPerPage,
-            onChange: setPage,
-          }}
-          className="custom-table"
-        />
-      </ConfigProvider>
+      <div className="grid grid-cols-5 gap-4">
+        {shopData.map((item) => (
+          <div key={item._id} className="flex flex-col items-center">
+            <img src={shopImage} alt="" />
+            <p className="text-sub_title text-xl font-medium">{item?.name}</p>
+          </div>
+        ))}
+      </div>
 
       {/* Add Modal */}
       <Modal
@@ -391,7 +323,7 @@ const Services = () => {
         footer={false}
       >
         <div className="p-6">
-          <h1 className="text-[20px] font-medium mb-3">Add Service</h1>
+          <h1 className="text-[20px] font-medium mb-3">Add Shop</h1>
           <form onSubmit={handleSubmit}>
             <div className="flex justify-center items-center gap-10 mb-10">
               <div>
@@ -402,7 +334,7 @@ const Services = () => {
                   style={{ display: "none" }}
                 />
                 <label
-                  className="relative"
+                  className="relative flex items-center justify-center"
                   htmlFor="img"
                   style={{
                     width: "120px",
@@ -410,20 +342,29 @@ const Services = () => {
                     cursor: "pointer",
                     borderRadius: "100%",
                     background: "#E0E0E0",
-                    backgroundImage: `url(${imgURL})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    overflow: "hidden",
                   }}
                 >
-                  {!imgURL && (
-                    <FiPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                  {imgURL ? (
+                    <img
+                      src={imgURL}
+                      alt="Preview"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: "100%",
+                      }}
+                    />
+                  ) : (
+                    <img className="h-6 w-6 object-cover" src={addImg} alt="" />
                   )}
                 </label>
               </div>
             </div>
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
-                Service Category
+                Shop Name
               </label>
               <input
                 value={form.category}
@@ -431,7 +372,7 @@ const Services = () => {
                   setForm((prev) => ({ ...prev, category: e.target.value }))
                 }
                 type="text"
-                placeholder="Enter Service Name"
+                placeholder="Enter Shop Name"
                 style={{
                   border: "1px solid #E0E4EC",
                   padding: "10px",
@@ -442,29 +383,6 @@ const Services = () => {
                   width: "100%",
                 }}
                 name="category"
-              />
-            </div>
-            <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", marginBottom: "5px" }}>
-                Service Type
-              </label>
-              <input
-                value={form.serviceType}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, serviceType: e.target.value }))
-                }
-                type="text"
-                placeholder="Enter Service Type"
-                style={{
-                  border: "1px solid #E0E4EC",
-                  padding: "10px",
-                  height: "52px",
-                  background: "white",
-                  borderRadius: "8px",
-                  outline: "none",
-                  width: "100%",
-                }}
-                name="serviceType"
               />
             </div>
             <input
@@ -484,135 +402,6 @@ const Services = () => {
               type="submit"
             />
           </form>
-        </div>
-      </Modal>
-
-      {/* Edit Modal */}
-      <Modal
-        centered
-        open={!!value}
-        onCancel={() => setValue(null)}
-        width={500}
-        footer={false}
-      >
-        <div className="p-6">
-          <h1 className="text-[20px] font-medium mb-3">Edit Service</h1>
-          <form onSubmit={handleEdit}>
-            <div className="flex justify-center items-center gap-10 mb-10">
-              <div>
-                <input
-                  onChange={onChange}
-                  type="file"
-                  id="img-edit"
-                  style={{ display: "none" }}
-                />
-                <label
-                  className="relative"
-                  htmlFor="img-edit"
-                  style={{
-                    width: "120px",
-                    height: "120px",
-                    cursor: "pointer",
-                    borderRadius: "100%",
-                    background: "#E0E0E0",
-                    backgroundImage: `url(${imgURL})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                >
-                  {!imgURL && (
-                    <FiPlus className="text-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                  )}
-                </label>
-              </div>
-            </div>
-            <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", marginBottom: "5px" }}>
-                Service Category
-              </label>
-              <input
-                value={form.category}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, category: e.target.value }))
-                }
-                type="text"
-                placeholder="Enter Service Name"
-                style={{
-                  border: "1px solid #E0E4EC",
-                  padding: "10px",
-                  height: "52px",
-                  background: "white",
-                  borderRadius: "8px",
-                  outline: "none",
-                  width: "100%",
-                }}
-                name="category"
-              />
-            </div>
-            <div style={{ marginBottom: "16px" }}>
-              <label style={{ display: "block", marginBottom: "5px" }}>
-                Service Type
-              </label>
-              <input
-                value={form.serviceType}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, serviceType: e.target.value }))
-                }
-                type="text"
-                placeholder="Enter Service Type"
-                style={{
-                  border: "1px solid #E0E4EC",
-                  padding: "10px",
-                  height: "52px",
-                  background: "white",
-                  borderRadius: "8px",
-                  outline: "none",
-                  width: "100%",
-                }}
-                name="serviceType"
-              />
-            </div>
-            <input
-              className="cursor-pointer"
-              style={{
-                border: "none",
-                width: "100%",
-                height: "44px",
-                marginTop: "10px",
-                background: "#0F665A",
-                color: "white",
-                borderRadius: "8px",
-                outline: "none",
-                padding: "10px 20px",
-              }}
-              value="Update"
-              type="submit"
-            />
-          </form>
-        </div>
-      </Modal>
-
-      {/* Delete Modal */}
-      <Modal
-        centered
-        open={showDelete}
-        onCancel={() => setShowDelete(false)}
-        width={400}
-        footer={false}
-      >
-        <div className="p-6 text-center">
-          <p className="text-[#D93D04] text-center font-semibold">
-            Are you sure!
-          </p>
-          <p className="pt-4 pb-12 text-center">
-            Do you want to delete this content?
-          </p>
-          <button
-            onClick={handleDelete}
-            className="bg-[#0F665A] py-2 px-5 text-white rounded-md"
-          >
-            Confirm
-          </button>
         </div>
       </Modal>
     </>
