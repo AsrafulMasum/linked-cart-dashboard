@@ -55,23 +55,17 @@ const Sidebar = () => {
       {
         key: "/earnings",
         label: "Earnings",
-        icon: (
-          <img src={earningsSidebar} className="h-6" alt="Earnings icon" />
-        ),
+        icon: <img src={earningsSidebar} className="h-6" alt="Earnings icon" />,
       },
       {
-        key: "/subscriptions",
+        key: "/analytics",
         label: "Analytics",
-        icon: (
-          <img src={analytics} className="h-6" alt="Analytics icon" />
-        ),
+        icon: <img src={analytics} className="h-6" alt="Analytics icon" />,
       },
       {
         key: "/shopOwner",
         label: "Shop Owner",
-        icon: (
-          <img src={shopOwner} className="h-6" alt="Shop Owner icon" />
-        ),
+        icon: <img src={shopOwner} className="h-6" alt="Shop Owner icon" />,
       },
       {
         key: "/faq",
