@@ -4,15 +4,17 @@ import { CiLock, CiLogout, CiUser } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
 import { PiInfoThin } from "react-icons/pi";
 import logo from "../../assets/logo.png";
-import booking from "../../assets/booking.svg";
+import orderList from "../../assets/orderList.svg";
 import faq from "../../assets/faq.svg";
 import setting from "../../assets/setting.svg";
-import services from "../../assets/services.svg";
+import shop from "../../assets/shop.svg";
+import analytics from "../../assets/analytics.svg";
+import shopOwner from "../../assets/shopOwner.svg";
+import earningsSidebar from "../../assets/earningsSidebar.svg";
 import users from "../../assets/users.svg";
 import dashboard from "../../assets/dashboard.svg";
 import privacy from "../../assets/privacy.svg";
 import terms from "../../assets/terms.svg";
-import subscription from "../../assets/subscription.svg";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -40,19 +42,33 @@ const Sidebar = () => {
       },
       {
         key: "/services",
-        label: "Services",
-        icon: <img src={services} className="h-6" alt="services icon" />,
+        label: "Shop",
+        icon: <img src={shop} className="h-6" alt="shop icon" />,
       },
       {
         key: "/bookings",
-        label: "Booking List",
-        icon: <img src={booking} className="h-6" alt="booking icon" />,
+        label: "Order List",
+        icon: <img src={orderList} className="h-6" alt="order icon" />,
       },
       {
         key: "/subscriptions",
-        label: "Subscriptions",
+        label: "Earnings",
         icon: (
-          <img src={subscription} className="h-6" alt="subscription icon" />
+          <img src={earningsSidebar} className="h-6" alt="Earnings icon" />
+        ),
+      },
+      {
+        key: "/subscriptions",
+        label: "Analytics",
+        icon: (
+          <img src={analytics} className="h-6" alt="Analytics icon" />
+        ),
+      },
+      {
+        key: "/subscriptions",
+        label: "Shop Owner",
+        icon: (
+          <img src={shopOwner} className="h-6" alt="Shop Owner icon" />
         ),
       },
       {
@@ -116,7 +132,7 @@ const Sidebar = () => {
         <div className="flex justify-center mb-6">
           <img src={logo} alt="Logo" />
         </div>
-        <nav className="relative h-[75vh] pr-28 min-[1700px]:pr-40">
+        <nav className="h-[75vh] w-[300px] min-[1700px]:w-[344px]">
           <div className="flex flex-col gap-5">
             {menuItems.map((item) => {
               const active = isMenuActive(item);
@@ -156,7 +172,7 @@ const Sidebar = () => {
 
                   {/* Submenu */}
                   {item.submenu && isSubmenuOpen && (
-                    <div className="px-[22px] flex flex-col gap-2 pt-2">
+                    <div className="flex flex-col gap-2 pt-2 pl-8">
                       {item.submenu.map((sub) => (
                         <Link
                           to={sub.key}
@@ -178,7 +194,7 @@ const Sidebar = () => {
 
           <button
             onClick={handleLogout}
-            className="absolute bottom-0 flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-4"
+            className="flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-20 pb-10"
           >
             <CiLogout size={24} />
             <span className="text-lg">Log Out</span>

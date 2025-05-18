@@ -49,12 +49,12 @@
 
 .jodit-workplace {
   height: 450px !important;
-  background-color: #B5D0CC !important;
+  background-color: #E7F0EF75 !important;
   margin-top: 10px !important;
 }
 
 .jodit-container .jodit-toolbar-editor-collection {
-  background-color: #B5D0CC !important;
+  background-color: #E7F0EF75 !important;
 }
 
 .custom-input::placeholder {
