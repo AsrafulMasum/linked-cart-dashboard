@@ -106,6 +106,16 @@ const Sidebar = () => {
             label: "Terms of Services",
             icon: <img src={terms} className="h-6" alt="icon" />,
           },
+          {
+            key: "/settings/cookies-policy",
+            label: "Cookies Policy",
+            icon: <img src={terms} className="h-6" alt="icon" />,
+          },
+          {
+            key: "/settings/refund-and-return-policy",
+            label: "Refund and Return Policy",
+            icon: <img src={terms} className="h-6" alt="icon" />,
+          },
         ],
       },
     ],

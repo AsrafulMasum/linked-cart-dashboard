@@ -18,6 +18,8 @@ import Login from "../Pages/Auth/Login";
 import FAQ from "../Pages/Dashboard/FAQ";
 import Services from "../Pages/Dashboard/Services";
 import Bookings from "../Pages/Dashboard/Bookings";
+import RefundAndReturnPolicy from "../Pages/Dashboard/settings/RefundAndReturnPolicy";
+import CookiesPolicy from "../Pages/Dashboard/settings/CookiesPolicy";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/settings/terms-and-conditions",
         element: <TermsAndConditions />,
+      },
+      {
+        path: "/settings/cookies-policy",
+        element: <CookiesPolicy />,
+      },
+      {
+        path: "/settings/refund-and-return-policy",
+        element: <RefundAndReturnPolicy />,
       },
       {
         path: "/settings/change-password",
