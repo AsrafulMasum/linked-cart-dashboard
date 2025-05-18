@@ -86,7 +86,7 @@ const Profile = () => {
             <Button
               onClick={() => setProfileEdit(true)}
               style={{
-                background: "#E6E6FF",
+                background: "#B5D0CC",
                 color: "#0F665A",
                 display: "flex",
                 alignItems: "center",
@@ -115,7 +115,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}
@@ -133,7 +133,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}
@@ -155,7 +155,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}
@@ -226,7 +226,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}
@@ -243,7 +243,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}
@@ -264,7 +264,7 @@ const Profile = () => {
                 width: "100%",
                 height: "56px",
                 border: "none",
-                backgroundColor: "#F5F5FF66",
+                backgroundColor: "#E7F0EF75",
                 color: "#757575",
                 paddingLeft: "20px",
               }}

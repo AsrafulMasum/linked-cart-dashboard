@@ -15,6 +15,8 @@ import users from "../../assets/users.svg";
 import dashboard from "../../assets/dashboard.svg";
 import privacy from "../../assets/privacy.svg";
 import terms from "../../assets/terms.svg";
+import refund from "../../assets/refund.svg";
+import cookies from "../../assets/cookies.svg";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -109,12 +111,12 @@ const Sidebar = () => {
           {
             key: "/settings/cookies-policy",
             label: "Cookies Policy",
-            icon: <img src={terms} className="h-6" alt="icon" />,
+            icon: <img src={cookies} className="h-6" alt="icon" />,
           },
           {
             key: "/settings/refund-and-return-policy",
             label: "Refund and Return Policy",
-            icon: <img src={terms} className="h-6" alt="icon" />,
+            icon: <img src={refund} className="h-6" alt="icon" />,
           },
         ],
       },
