@@ -1,12 +1,14 @@
 import { ConfigProvider, Modal, Select, Table } from "antd";
 import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { IoEyeOutline } from "react-icons/io5";
+import { CiUser } from "react-icons/ci";
+import { IoCalendarOutline, IoEyeOutline } from "react-icons/io5";
+import card from "../../assets/card.svg";
 
 const data = [
   {
     key: "1",
-    name: "1",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -15,6 +17,9 @@ const data = [
     ],
     firstName: "John",
     lastName: "Doe",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-01T10:30:00Z",
     quantity: 2,
     amount: 100,
@@ -22,7 +27,7 @@ const data = [
   },
   {
     key: "2",
-    name: "2",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -31,6 +36,9 @@ const data = [
     ],
     firstName: "Jane",
     lastName: "Smith",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-02T12:45:00Z",
     quantity: 1,
     amount: 50,
@@ -38,7 +46,7 @@ const data = [
   },
   {
     key: "3",
-    name: "3",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -47,6 +55,9 @@ const data = [
     ],
     firstName: "Michael",
     lastName: "Johnson",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-03T09:20:00Z",
     quantity: 3,
     amount: 150,
@@ -54,7 +65,7 @@ const data = [
   },
   {
     key: "4",
-    name: "4",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -63,6 +74,9 @@ const data = [
     ],
     firstName: "Emily",
     lastName: "Clark",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-04T14:00:00Z",
     quantity: 4,
     amount: 200,
@@ -70,7 +84,7 @@ const data = [
   },
   {
     key: "5",
-    name: "5",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -79,6 +93,9 @@ const data = [
     ],
     firstName: "Chris",
     lastName: "Evans",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-05T11:10:00Z",
     quantity: 1,
     amount: 60,
@@ -86,7 +103,7 @@ const data = [
   },
   {
     key: "6",
-    name: "6",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -95,6 +112,9 @@ const data = [
     ],
     firstName: "Sarah",
     lastName: "Brown",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-06T08:45:00Z",
     quantity: 5,
     amount: 250,
@@ -102,7 +122,7 @@ const data = [
   },
   {
     key: "7",
-    name: "7",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -111,6 +131,9 @@ const data = [
     ],
     firstName: "David",
     lastName: "Lee",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-07T13:30:00Z",
     quantity: 2,
     amount: 120,
@@ -118,7 +141,7 @@ const data = [
   },
   {
     key: "8",
-    name: "8",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -127,6 +150,9 @@ const data = [
     ],
     firstName: "Olivia",
     lastName: "Martinez",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-08T10:20:00Z",
     quantity: 3,
     amount: 180,
@@ -134,7 +160,7 @@ const data = [
   },
   {
     key: "9",
-    name: "9",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -143,6 +169,9 @@ const data = [
     ],
     firstName: "Daniel",
     lastName: "White",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-09T16:10:00Z",
     quantity: 1,
     amount: 45,
@@ -150,7 +179,7 @@ const data = [
   },
   {
     key: "10",
-    name: "10",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -159,6 +188,9 @@ const data = [
     ],
     firstName: "Sophia",
     lastName: "Hall",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-10T09:15:00Z",
     quantity: 6,
     amount: 300,
@@ -166,7 +198,7 @@ const data = [
   },
   {
     key: "11",
-    name: "11",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -175,6 +207,9 @@ const data = [
     ],
     firstName: "Ethan",
     lastName: "Walker",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-11T14:50:00Z",
     quantity: 2,
     amount: 110,
@@ -182,7 +217,7 @@ const data = [
   },
   {
     key: "12",
-    name: "12",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -191,6 +226,9 @@ const data = [
     ],
     firstName: "Ava",
     lastName: "Lopez",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-12T12:05:00Z",
     quantity: 4,
     amount: 190,
@@ -198,7 +236,7 @@ const data = [
   },
   {
     key: "13",
-    name: "13",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -207,6 +245,9 @@ const data = [
     ],
     firstName: "Noah",
     lastName: "Harris",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-13T10:25:00Z",
     quantity: 3,
     amount: 165,
@@ -214,7 +255,7 @@ const data = [
   },
   {
     key: "14",
-    name: "14",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -223,6 +264,9 @@ const data = [
     ],
     firstName: "Isabella",
     lastName: "Lewis",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-14T11:35:00Z",
     quantity: 2,
     amount: 95,
@@ -230,7 +274,7 @@ const data = [
   },
   {
     key: "15",
-    name: "15",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -239,6 +283,9 @@ const data = [
     ],
     firstName: "James",
     lastName: "Young",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-15T13:00:00Z",
     quantity: 1,
     amount: 40,
@@ -246,7 +293,7 @@ const data = [
   },
   {
     key: "16",
-    name: "16",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -255,6 +302,9 @@ const data = [
     ],
     firstName: "Mia",
     lastName: "King",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-16T09:40:00Z",
     quantity: 4,
     amount: 210,
@@ -262,7 +312,7 @@ const data = [
   },
   {
     key: "17",
-    name: "17",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -271,6 +321,9 @@ const data = [
     ],
     firstName: "Lucas",
     lastName: "Wright",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-17T15:25:00Z",
     quantity: 2,
     amount: 115,
@@ -278,7 +331,7 @@ const data = [
   },
   {
     key: "18",
-    name: "18",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -287,6 +340,9 @@ const data = [
     ],
     firstName: "Charlotte",
     lastName: "Scott",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-18T08:55:00Z",
     quantity: 5,
     amount: 275,
@@ -294,7 +350,7 @@ const data = [
   },
   {
     key: "19",
-    name: "19",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -303,6 +359,9 @@ const data = [
     ],
     firstName: "Benjamin",
     lastName: "Green",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-19T10:10:00Z",
     quantity: 3,
     amount: 135,
@@ -310,7 +369,7 @@ const data = [
   },
   {
     key: "20",
-    name: "20",
+    orderId: "1001",
     productImage: [
       "https://i.ibb.co/Txntgs82/67d2b16006cacaa9832a34d3df7e20cf95a975ec.png",
       "https://i.ibb.co/RGgb5zsj/1b127751246dbd7923a8bf64d53fd61b99a466fd.png",
@@ -319,6 +378,9 @@ const data = [
     ],
     firstName: "Amelia",
     lastName: "Baker",
+    customerEmail: "john.doe@example.com",
+    customerPhone: "+1-202-555-0111",
+    cardNumber: "**** **** **** 1234",
     createdAt: "2025-05-20T13:20:00Z",
     quantity: 2,
     amount: 90,
@@ -369,11 +431,8 @@ const OrdersList = () => {
     () => [
       {
         title: "Serial ID",
-        dataIndex: "name",
-        key: "name",
-        render: (_, __, index) => (
-          <p>{(page - 1) * itemsPerPage + index + 1}</p>
-        ),
+        dataIndex: "orderId",
+        key: "orderId",
       },
       {
         title: "Product Images",
@@ -514,105 +573,115 @@ const OrdersList = () => {
         />
       </ConfigProvider>
 
-      <Modal open={!!value} onCancel={handleModalClose} footer={false}>
-        <div>
-          <h4 className="text-lg font-medium mt-[35px]">Client Information</h4>
-          <div className="flex items-center justify-between mt-4">
+      <Modal
+        width={800}
+        centered
+        open={!!value}
+        onCancel={handleModalClose}
+        footer={false}
+      >
+        <div className="p-8">
+          <div className="flex items-center justify-between">
             <div>
-              <p className="pb-[5px]">User Name</p>
-              <p className="pb-[5px]">Email</p>
-              <p className="pb-[5px]">Service Type</p>
-              <p>Start Date</p>
-            </div>
-            <div>
-              <p className="pb-[5px] text-right">
-                {value?.firstName || ""} {value?.lastName || ""}
-              </p>
-              <p className="pb-[5px] text-right">
-                {value?.userEmail || "henry.green@example.com"}
-              </p>
-              <p className="pb-[5px] text-right">
-                {value?.serviceType || "Home Service"}
-              </p>
-              <p className="text-right">
-                {value?.createdAt ? moment(value.createdAt).format("L") : ""}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="text-lg font-medium mt-[35px]">
-            Service Provider Information
-          </h4>
-          <div className="flex items-center justify-between mt-4">
-            <div>
-              <p className="pb-[5px]">Provider Name</p>
-              <p className="pb-[5px]">Email</p>
-              <p className="pb-[5px]">Service Type</p>
-              <p>Start Date</p>
-            </div>
-            <div>
-              <p className="pb-[5px] text-right">{value?.provider || "XYZ"}</p>
-              <p className="pb-[5px] text-right">
-                {value?.providerEmail || "henry.green@example.com"}
-              </p>
-              <p className="pb-[5px] text-right">
-                {value?.serviceType || "Home Service"}
-              </p>
-              <p className="text-right">
-                {value?.createdAt ? moment(value.createdAt).format("L") : ""}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h4 className="text-lg font-medium mt-[35px]">Service Information</h4>
-          <div className="flex items-center justify-between mt-4">
-            <div>
-              <p className="pb-[5px]">Category</p>
-              <p className="pb-[5px]">Service Name</p>
-              <p className="pb-[5px] h-10">Service Image</p>
-              <p className="pb-[5px]">Price</p>
-              <p className="pb-[5px]">Booking Date</p>
-              <p>Status</p>
-            </div>
-            <div>
-              <p className="pb-[5px] text-right">
-                {value?.category || "Home Service"}
-              </p>
-              <p className="pb-[5px] text-right">
-                {value?.serviceType || "Cleaning"}
-              </p>
-              <div className="pb-[5px] flex justify-end">
-                {value?.serviceImage ? (
-                  <img
-                    className="h-10 w-10 object-cover"
-                    src={value.serviceImage}
-                    alt="Service"
-                  />
-                ) : (
-                  "No Image available"
-                )}
+              <div className="flex items-center gap-4">
+                <p className="text-xl font-semibold text-sub_title">
+                  Order ID : {value?.orderId}
+                </p>
+                {/* Status badge with dynamic background color */}
+                {(() => {
+                  const statusColorMap = {
+                    Pending: { color: "#F78F08", bg: "#FFF7E6" },
+                    Completed: { color: "#0F665A", bg: "#E6F7F1" },
+                    Shipped: { color: "#1890FF", bg: "#E6F7FF" },
+                    Delivered: { color: "#52C41A", bg: "#F6FFED" },
+                    Cancelled: { color: "#FF4D4F", bg: "#FFF1F0" },
+                  };
+                  const { color, bg } = statusColorMap[value?.status] || {
+                    color: "#333",
+                    bg: "#f0f0f0",
+                  };
+                  return (
+                    <p
+                      className="py-1 px-5 rounded text-lg"
+                      style={{ background: bg, color, fontWeight: 500 }}
+                    >
+                      {value?.status}
+                    </p>
+                  );
+                })()}
               </div>
-              <p className="pb-[5px] text-right">
-                {value?.price ? `$ ${value.price}` : "$50"}
-              </p>
-              <p className="pb-[5px] text-right">
-                {value?.createdAt ? moment(value.createdAt).format("L") : ""}
-              </p>
-              <Select
-                defaultValue="ongoing"
-                style={{ width: 200 }}
-                onChange={handleChange}
-                options={[
-                  { value: "ongoing", label: "Ongoing" },
-                  { value: "cancel", label: "Cancel" },
-                  { value: "completed", label: "Completed" },
-                ]}
-              />
+              <div className="flex items-center gap-4 mt-4 text-[#5C5C5C]">
+                <IoCalendarOutline className="text-2xl" />
+                <p className="text-lg">
+                  {" "}
+                  {moment(value?.createdAt).format("L")}
+                </p>
+              </div>
             </div>
+            <div className="flex gap-4">
+              <div className="p-2 bg-gray-100 rounded h-16">
+                <CiUser className="text-5xl" />
+              </div>
+              <div>
+                <h4 className="text-[#60A548] text-xl font-semibold">
+                  Customer
+                </h4>
+                <p className="text-[#5C5C5C] font-semibold">
+                  Full Name : {value?.firstName || ""} {value?.lastName || ""}
+                </p>
+                <p className="text-[#5C5C5C] font-semibold">
+                  Email : {value?.customerEmail}
+                </p>
+                <p className="text-[#5C5C5C] font-semibold">
+                  Phone : {value?.customerPhone}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <h4 className="text-[#60A548] text-xl font-semibold">
+              Payment Info
+            </h4>
+            <div className="flex items-center gap-2 mt-4">
+              <img className="py-1 px-1.5 border rounded" src={card} alt="" />
+              <p className="text-[#5C5C5C] text-lg font-semibold">
+                Master Card {value?.cardNumber}
+              </p>
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <h4 className="text-[#60A548] text-xl font-semibold mt-10">
+              Product Images
+            </h4>
+            <div className="flex items-center justify-between mt-4">
+              <div className="flex gap-2">
+                {value?.productImage.map((img, idx) => (
+                  <img
+                    key={idx}
+                    src={img}
+                    alt={`Product ${idx}`}
+                    className="w-10 h-10 object-cover rounded border border-[#3F857B]"
+                  />
+                ))}
+              </div>
+              <p className="text-lg text-[#5C5C5C] font-semibold">
+                {value?.quantity}
+              </p>
+              <p className="text-lg text-[#5C5C5C] font-semibold">
+                $ {value?.amount}
+              </p>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="mt-8 flex items-center justify-between">
+            <h4 className="text-primary text-2xl font-bold">Total</h4>
+            <p className="text-xl text-primary font-semibold">
+              $ {value?.amount}
+            </p>
           </div>
         </div>
       </Modal>
