@@ -4,11 +4,15 @@ export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://206.189.231.81:5000/api",
-    // baseUrl: "http://192.168.10.195:5000/api"
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      if (token && token !== "undefined") {
+        headers.set("Authorization", `Bearer ${JSON.parse(token)}`);
+      }
+      return headers;
+    },
   }),
   endpoints: () => ({}),
 });
 
-// export const imageUrl = "http://206.189.231.81:5000";
 export const imageUrl = "http://206.189.231.81:5000";
- 

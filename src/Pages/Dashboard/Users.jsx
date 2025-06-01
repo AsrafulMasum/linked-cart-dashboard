@@ -1,8 +1,9 @@
-import { ConfigProvider, Modal, Table } from "antd";
+import { ConfigProvider, Input, Modal, Table } from "antd";
 import moment from "moment";
 import { useCallback, useMemo, useState } from "react";
 import deleteIcon from "../../assets/delete.svg";
 import { IoEyeOutline } from "react-icons/io5";
+import { FiSearch } from "react-icons/fi";
 
 const initialData = [
   {
@@ -190,11 +191,17 @@ const initialData = [
 const itemsPerPage = 10;
 
 const Users = () => {
+  const [srcText, setSrcText] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState(initialData);
   const [value, setValue] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSrcText(e.target.value);
+  };
 
   const handleDelete = useCallback(() => {
     setData((prev) => prev.filter((item) => item.key !== deleteId));
@@ -276,6 +283,34 @@ const Users = () => {
     <>
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-primary text-2xl font-semibold">User List</h2>
+        <div
+          style={{
+            width: "353px",
+            height: "40px",
+            borderRadius: "8px",
+          }}
+        >
+          <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: "#0F665A",
+              },
+            }}
+          >
+            <Input
+              placeholder="Search..."
+              onChange={handleSearchChange}
+              prefix={<FiSearch size={14} color="#868FA0" />}
+              style={{
+                width: "100%",
+                height: "100%",
+                fontSize: "14px",
+                backgroundColor: "#FAFAFA",
+              }}
+              size="middle"
+            />
+          </ConfigProvider>
+        </div>
       </div>
 
       <ConfigProvider
@@ -309,7 +344,20 @@ const Users = () => {
         onCancel={() => setValue(null)}
         footer={false}
       >
-        <div>
+        <div className="p-2">
+          <div className="flex justify-center">
+            <img
+              className="h-36 w-36 rounded-full object-cover"
+              src={
+                value?.profile && value?.profile.startsWith("https")
+                  ? value?.profile
+                  : value?.profile
+                  ? `${imageUrl}${value?.profile}`
+                  : "/logo.svg"
+              }
+              alt="user image"
+            />
+          </div>
           <div className="flex items-center justify-between mt-[35px]">
             <div>
               <p className="pb-[5px]">User Name</p>
