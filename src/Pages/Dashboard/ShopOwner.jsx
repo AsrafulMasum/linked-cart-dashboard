@@ -241,7 +241,7 @@ const ShopOwner = () => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontSize: "25px", fontWeight: "normal" }}>Shop Owner List</h2>
+        <h2 style={{ fontSize: "25px", fontWeight: "normal", color: "#0F665A" }}>Shop Owners</h2>
       </div>
 
       <ConfigProvider

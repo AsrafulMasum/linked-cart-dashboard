@@ -98,7 +98,7 @@ const FAQ = () => {
     <div className="bg-white px-3 py-2 rounded-lg">
       <div style={{ margin: "24px 16px" }}>
         <div className="flex items-center justify-between w-full">
-          <h3 className="text-[#333333]" style={{ fontSize: 24, fontWeight: 500, lineHeight: "24px" }}>
+          <h3 className="text-[#0F665A]" style={{ fontSize: 24, fontWeight: 500, lineHeight: "24px" }}>
             FAQ
           </h3>
           <Button

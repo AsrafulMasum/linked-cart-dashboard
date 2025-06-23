@@ -237,7 +237,11 @@ const Earnings = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontSize: "25px", fontWeight: "normal" }}>Earnings List</h2>
+        <h2
+          style={{ fontSize: "25px", fontWeight: "normal", color: "#0F665A" }}
+        >
+          Earnings
+        </h2>
       </div>
 
       <ConfigProvider

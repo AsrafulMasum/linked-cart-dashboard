@@ -9,15 +9,21 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/about",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     updateAboutUs: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "PATCH",
           url: "/rule/about",
-          body: payload,
+          body: data,
         };
+      },
+      transformResponse: ( data ) => {
+        return data;
       },
     }),
 
@@ -28,15 +34,21 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/privacy-policy",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     updatePrivacyPolicy: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "PATCH",
           url: "/rule/privacy-policy",
-          body: payload,
+          body: data,
         };
+      },
+      transformResponse: ( data ) => {
+        return data;
       },
     }),
 
@@ -47,53 +59,21 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/terms-and-conditions",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     updateTermsCondition: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "PATCH",
           url: "/rule/terms-and-conditions",
-          body: payload,
+          body: data,
         };
       },
-    }),
-
-    getCookiePolicy: builder.query({
-      query: () => {
-        return {
-          method: "GET",
-          url: "/rule/terms-and-conditions",
-        };
-      },
-    }),
-
-    updateCookiePolicy: builder.mutation({
-      query: (payload) => {
-        return {
-          method: "PATCH",
-          url: "/rule/terms-and-conditions",
-          body: payload,
-        };
-      },
-    }),
-
-    getRefundPolicy: builder.query({
-      query: () => {
-        return {
-          method: "GET",
-          url: "/rule/terms-and-conditions",
-        };
-      },
-    }),
-
-    updateRefundPolicy: builder.mutation({
-      query: (payload) => {
-        return {
-          method: "PATCH",
-          url: "/rule/terms-and-conditions",
-          body: payload,
-        };
+      transformResponse: ( data ) => {
+        return data;
       },
     }),
   }),
@@ -106,8 +86,4 @@ export const {
   useUpdatePrivacyPolicyMutation,
   useGetTermsConditionQuery,
   useUpdateTermsConditionMutation,
-  useGetCookiePolicyQuery,
-  useUpdateCookiePolicyMutation,
-  useGetRefundPolicyQuery,
-  useUpdateRefundPolicyMutation,
 } = rulesApi;

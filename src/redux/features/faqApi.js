@@ -9,22 +9,31 @@ const faqApi = baseApi.injectEndpoints({
           url: "/faq/get",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     createFAQ: builder.mutation({
-      query: (payload) => ({
+      query: (faq) => ({
         method: "POST",
         url: "/faq",
-        body: payload,
+        body: faq,
       }),
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     updateFAQ: builder.mutation({
-      query: ({ id, payload }) => ({
+      query: ({ id, faq }) => ({
         method: "PUT",
         url: `/faq/update/${id}`,
-        body: payload,
+        body: faq,
       }),
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     deleteFAQ: builder.mutation({
@@ -32,6 +41,9 @@ const faqApi = baseApi.injectEndpoints({
         method: "DELETE",
         url: `/faq/delete/${id}`,
       }),
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
   }),
 });

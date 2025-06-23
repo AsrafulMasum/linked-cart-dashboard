@@ -545,7 +545,11 @@ const OrdersList = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontSize: "25px", fontWeight: "normal" }}>Order List</h2>
+        <h2
+          style={{ fontSize: "25px", fontWeight: "normal", color: "#0F665A" }}
+        >
+          Order List
+        </h2>
       </div>
 
       <ConfigProvider

@@ -9,41 +9,50 @@ const authApi = baseApi.injectEndpoints({
           url: "/user/profile",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     otpVerify: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "POST",
           url: "/auth/verify-email",
-          body: payload,
+          body: data,
         };
       },
     }),
 
     login: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "POST",
           url: "/auth/login",
-          body: payload,
+          body: data,
         };
+      },
+      transformResponse: (data) => {
+        return data;
+      },
+      transformErrorResponse: ({ data }) => {
+        const { message } = data;
+        return message;
       },
     }),
 
     forgotPassword: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "POST",
           url: "/auth/forgot-password",
-          body: payload,
+          body: data,
         };
       },
     }),
 
     resetPassword: builder.mutation({
-      query: ({ payload, token }) => {
-        console.log(payload);
+      query: ({payload, token}) => {
         return {
           method: "POST",
           url: "/auth/reset-password",
@@ -56,32 +65,35 @@ const authApi = baseApi.injectEndpoints({
     }),
 
     changePassword: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "POST",
           url: "/auth/change-password",
-          body: payload,
+          body: data,
         };
       },
     }),
 
     updateProfile: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "PATCH",
           url: "/user",
-          body: payload,
+          body: data,
         };
       },
     }),
 
     resendOTP: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
         return {
           method: "POST",
           url: "/user/resend-otp",
-          body: payload,
+          body: data,
         };
+      },
+      transformResponse: (data) => {
+        return data;
       },
     }),
   }),

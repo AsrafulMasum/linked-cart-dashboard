@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CiLock, CiLogout, CiUser } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
-import { PiInfoThin } from "react-icons/pi";
+import { PiInfoThin, PiSealPercentThin } from "react-icons/pi";
 import logo from "../../assets/logo.png";
 import orderList from "../../assets/orderList.svg";
 import faq from "../../assets/faq.svg";
@@ -66,6 +66,11 @@ const Sidebar = () => {
         key: "/shopOwner",
         label: "Shop Owner",
         icon: <img src={shopOwner} className="h-6" alt="Shop Owner icon" />,
+      },
+      {
+        key: "/offers",
+        label: "Offers",
+        icon: <PiSealPercentThin className="text-2xl" />,
       },
       {
         key: "/faq",
@@ -200,7 +205,7 @@ const Sidebar = () => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-20 pb-10"
+            className="flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-8 pb-10"
           >
             <CiLogout size={24} />
             <span className="text-lg">Log Out</span>

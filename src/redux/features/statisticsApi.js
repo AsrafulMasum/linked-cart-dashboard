@@ -2,57 +2,46 @@ import { baseApi } from "../api/baseApi";
 
 const statisticsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBannerStats: builder.query({
+    statistics: builder.query({
       query: () => {
         return {
-          url: "/",
+          url: "/booking/total-service",
           method: "GET",
         };
       },
-    }),
-
-    getUserStats: builder.query({
-      query: () => {
-        return {
-          url: "/",
-          method: "GET",
-        };
+      transformResponse: ({ data }) => {
+        return data;
       },
     }),
 
-    getEarningStats: builder.query({
-      query: () => {
+    userGraphStatistics: builder.query({
+      query: (year) => {
         return {
-          url: "/",
+          url: `/booking/userstate?year=${year}`,
           method: "GET",
         };
       },
-    }),
-
-    getRetentionStats: builder.query({
-      query: () => {
-        return {
-          url: "/",
-          method: "GET",
-        };
+      transformResponse: ({ data }) => {
+        return data;
       },
     }),
 
-    getRetailerStats: builder.query({
-      query: () => {
+    earningsGraphStatistics: builder.query({
+      query: (year) => {
         return {
-          url: "/",
+          url: `/booking/monthlyEarning?year=${year}`,
           method: "GET",
         };
+      },
+      transformResponse: ({ data }) => {
+        return data;
       },
     }),
   }),
 });
 
 export const {
-  useGetBannerStatsQuery,
-  useGetUserStatsQuery,
-  useGetEarningStatsQuery,
-  useGetRetentionStatsQuery,
-  useGetRetailerStatsQuery,
+  useStatisticsQuery,
+  useUserGraphStatisticsQuery,
+  useEarningsGraphStatisticsQuery,
 } = statisticsApi;

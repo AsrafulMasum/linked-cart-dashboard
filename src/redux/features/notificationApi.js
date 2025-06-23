@@ -9,6 +9,9 @@ const notificationApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      transformResponse: ({ data }) => {
+        return data;
+      },
     }),
 
     readNotification: builder.mutation({
