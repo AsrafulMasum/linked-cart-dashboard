@@ -5,16 +5,19 @@ import toast from "react-hot-toast";
 import { imageUrl } from "../../redux/api/baseApi";
 import { useUser } from "../../provider/User";
 import { FaRegEdit } from "react-icons/fa";
-import { useProfileQuery, useUpdateProfileMutation } from "../../redux/features/authApi";
+import {
+  useProfileQuery,
+  useUpdateProfileMutation,
+} from "../../redux/features/authApi";
 
 const Profile = () => {
   const [profileEdit, setProfileEdit] = useState(false);
   const [image, setImage] = useState();
   const [imgURL, setImgURL] = useState();
   const [form] = Form.useForm();
-  const { user } = useUser();
-  const { refetch } = useProfileQuery();
+  const { data, refetch } = useProfileQuery();
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
+  const user = data?.data;
 
   useEffect(() => {
     if (user) {
@@ -22,44 +25,41 @@ const Profile = () => {
     }
   }, [user, form]);
 
-  const onChange = useCallback((e) => {
+  const onChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imgUrl = URL.createObjectURL(file);
       setImgURL(imgUrl);
       setImage(file);
     }
-  }, []);
+  };
 
   const src =
-    user?.image && user?.image.startsWith("https")
-      ? user?.image
-      : user?.image
-      ? `${imageUrl}${user?.image}`
+    user?.profile && user?.profile.startsWith("http")
+      ? user?.profile
+      : user?.profile
+      ? `${imageUrl}${user?.profile}`
       : "/default-avatar.png";
 
-  const handleSubmit = useCallback(
-    async (values) => {
-      const formData = new FormData();
-      if (image) {
-        formData.append("image", image);
+  const handleSubmit = async (values) => {
+    const formData = new FormData();
+    if (image) {
+      formData.append("image", image);
+    }
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
+    try {
+      const data = await updateProfile(formData).unwrap();
+      if (data?.success) {
+        toast.success(data?.message);
+        refetch();
+        setProfileEdit(false);
       }
-      Object.keys(values).forEach((key) => {
-        formData.append(key, values[key]);
-      });
-      try {
-        const { status, message } = await updateProfile(formData).unwrap();
-        if (status) {
-          toast.success(message);
-          refetch();
-          setProfileEdit(false);
-        }
-      } catch (err) {
-        toast.error(err?.message || "Update failed");
-      }
-    },
-    [image, updateProfile, refetch]
-  );
+    } catch (err) {
+      toast.error(err?.message || "Update failed");
+    }
+  };
 
   return (
     <div className="px-52 pt-20">
@@ -68,9 +68,7 @@ const Profile = () => {
           <div className="col-span-12 flex items-center justify-between pb-6 mb-10">
             <div className="flex gap-5 items-end">
               <img
-                width={140}
-                height={140}
-                style={{ borderRadius: "100%" }}
+                className="w-[140px] h-[140px] rounded-full object-cover"
                 src={src}
                 alt="Profile"
               />
@@ -98,6 +96,7 @@ const Profile = () => {
               Edit Profile
             </Button>
           </div>
+
           <Form.Item
             name={"name"}
             label={
@@ -118,6 +117,7 @@ const Profile = () => {
               }}
             />
           </Form.Item>
+
           <Form.Item
             name={"email"}
             label={<p className="text-xl font-medium text-sub_title">Email</p>}
@@ -136,8 +136,9 @@ const Profile = () => {
               }}
             />
           </Form.Item>
+
           <Form.Item
-            name={"mobileNumber"}
+            name={"contact"}
             label={
               <p className="text-xl font-medium text-sub_title">
                 Contact Number
@@ -210,6 +211,7 @@ const Profile = () => {
               </label>
             </div>
           </div>
+
           <Form.Item
             name={"name"}
             label={
@@ -229,25 +231,9 @@ const Profile = () => {
               }}
             />
           </Form.Item>
+
           <Form.Item
-            name={"email"}
-            label={<p className="text-xl font-medium text-sub_title">Email</p>}
-            className="col-span-12"
-            style={{ marginBottom: 0 }}
-          >
-            <Input
-              style={{
-                width: "100%",
-                height: "56px",
-                border: "none",
-                backgroundColor: "#E7F0EF75",
-                color: "#757575",
-                paddingLeft: "20px",
-              }}
-            />
-          </Form.Item>
-          <Form.Item
-            name={"mobileNumber"}
+            name={"contact"}
             label={
               <p className="text-xl font-medium text-sub_title">
                 Contact Number
@@ -267,6 +253,7 @@ const Profile = () => {
               }}
             />
           </Form.Item>
+
           <Form.Item style={{ marginBottom: 0 }} className="col-span-12">
             <Button
               htmlType="submit"

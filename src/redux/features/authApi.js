@@ -6,11 +6,8 @@ const authApi = baseApi.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/user/profile",
+          url: "/user",
         };
-      },
-      transformResponse: ({ data }) => {
-        return data;
       },
     }),
 
@@ -32,13 +29,6 @@ const authApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      // transformResponse: (data) => {
-      //   return data;
-      // },
-      // transformErrorResponse: ({ data }) => {
-      //   const { message } = data;
-      //   return message;
-      // },
     }),
 
     forgotPassword: builder.mutation({

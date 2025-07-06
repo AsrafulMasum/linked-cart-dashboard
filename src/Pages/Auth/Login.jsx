@@ -14,11 +14,10 @@ const Login = () => {
       const res = await login({
         email: values.email,
         password: values.password,
-        role: "SUPER_ADMIN",
       }).unwrap();
 
       if (res?.success) {
-        localStorage.setItem("token", JSON.stringify(res?.data?.Token));
+        localStorage.setItem("token", JSON.stringify(res?.data?.accessToken));
         toast.success("Login successful!");
         navigate("/");
       } else {
