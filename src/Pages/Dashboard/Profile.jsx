@@ -2,13 +2,10 @@ import { Button, Form, Input } from "antd";
 import React, { useEffect, useState, useCallback } from "react";
 import { LiaEditSolid } from "react-icons/lia";
 import toast from "react-hot-toast";
-import {
-  useProfileQuery,
-  useUpdateProfileMutation,
-} from "../../redux/apiSlices/authSlice";
 import { imageUrl } from "../../redux/api/baseApi";
 import { useUser } from "../../provider/User";
 import { FaRegEdit } from "react-icons/fa";
+import { useProfileQuery, useUpdateProfileMutation } from "../../redux/features/authApi";
 
 const Profile = () => {
   const [profileEdit, setProfileEdit] = useState(false);

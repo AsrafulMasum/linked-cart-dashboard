@@ -32,13 +32,13 @@ const authApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (data) => {
-        return data;
-      },
-      transformErrorResponse: ({ data }) => {
-        const { message } = data;
-        return message;
-      },
+      // transformResponse: (data) => {
+      //   return data;
+      // },
+      // transformErrorResponse: ({ data }) => {
+      //   const { message } = data;
+      //   return message;
+      // },
     }),
 
     forgotPassword: builder.mutation({
