@@ -321,7 +321,7 @@ const Offers = () => {
         ),
       },
       {
-        title: "Banner Image",
+        title: "Offer Image",
         dataIndex: "image",
         key: "image",
         render: (_, record) => (
@@ -341,7 +341,7 @@ const Offers = () => {
         ),
       },
       {
-        title: "Banner Name",
+        title: "Offer Name",
         dataIndex: "name",
         key: "name",
       },

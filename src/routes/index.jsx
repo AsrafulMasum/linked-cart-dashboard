@@ -24,6 +24,7 @@ import Earnings from "../Pages/Dashboard/Earnings";
 import ShopOwner from "../Pages/Dashboard/ShopOwner";
 import Analytics from "../Pages/Dashboard/Analytics";
 import Offers from "../Pages/Dashboard/Offers";
+import DeliveryMan from "../Pages/Dashboard/DeliveryMan";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/offers",
         element: <Offers />,
+      },
+      {
+        path: "/delivery-man",
+        element: <DeliveryMan />,
       },
       {
         path: "/faq",
