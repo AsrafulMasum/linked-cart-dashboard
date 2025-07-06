@@ -231,11 +231,11 @@ const Users = () => {
           </div>
         ),
       },
-      {
-        title: "Category",
-        dataIndex: "category",
-        key: "category",
-      },
+      // {
+      //   title: "Category",
+      //   dataIndex: "category",
+      //   key: "category",
+      // },
       {
         title: "Email",
         dataIndex: "email",
@@ -263,7 +263,7 @@ const Users = () => {
               className="text-2xl text-sub_title cursor-pointer"
               onClick={() => setValue(record)}
             />
-            <img
+            {/* <img
               className="cursor-pointer"
               onClick={() => {
                 setDeleteId(record?.key);
@@ -271,7 +271,7 @@ const Users = () => {
               }}
               src={deleteIcon}
               alt="Delete Icon"
-            />
+            /> */}
           </div>
         ),
       },

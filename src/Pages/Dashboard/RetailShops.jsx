@@ -94,7 +94,7 @@ const RetailShops = () => {
         }}
       >
         <h2 className="text-primary text-2xl font-semibold">Retail Shops</h2>
-        <div>
+        {/* <div>
           <Button
             onClick={() => {
               setOpenAddModel(true);
@@ -118,7 +118,7 @@ const RetailShops = () => {
             <PlusOutlined />
             <span style={{ margin: 0 }}>Add Service</span>
           </Button>
-        </div>
+        </div> */}
       </div>
 
       <div className="grid grid-cols-5 gap-4">

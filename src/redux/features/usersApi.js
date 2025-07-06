@@ -5,7 +5,7 @@ const usersApi = baseApi.injectEndpoints({
     getUsers: builder.query({
       query: (srcText) => {
         return {
-          url: `/admin/users?search=${srcText}`,
+          url: `/user/users?role=CUSTOMER&searchTerm=${srcText}`,
           method: "GET",
         };
       },
