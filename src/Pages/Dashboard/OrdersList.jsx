@@ -388,7 +388,7 @@ const data = [
   },
 ];
 
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 const OrdersList = () => {
   const [page, setPage] = useState(1);

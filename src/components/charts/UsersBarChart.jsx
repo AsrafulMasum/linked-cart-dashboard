@@ -86,7 +86,7 @@ const UsersBarChart = () => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={230}>
+      <ResponsiveContainer width="100%" height={215}>
         <BarChart data={userStatsData} barSize={10}>
           <CartesianGrid vertical={false} stroke="#757575" />
           <XAxis dataKey="month" axisLine={false} tickLine={false} />

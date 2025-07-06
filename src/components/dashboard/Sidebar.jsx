@@ -17,6 +17,7 @@ import privacy from "../../assets/privacy.svg";
 import terms from "../../assets/terms.svg";
 import refund from "../../assets/refund.svg";
 import cookies from "../../assets/cookies.svg";
+import deliveryMan from "../../assets/deliveryMan.svg"
 
 const Sidebar = () => {
   const location = useLocation();
@@ -71,6 +72,11 @@ const Sidebar = () => {
         key: "/offers",
         label: "Offers",
         icon: <PiSealPercentThin className="text-2xl" />,
+      },
+      {
+        key: "/delivery-man",
+        label: "Delivery Man",
+        icon: <img src={deliveryMan} className="h-6" alt="Delivery man icon" />,
       },
       {
         key: "/faq",
@@ -138,13 +144,13 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="min-h-screen w-dvw">
+    <div className="min-h-screen">
       <aside className="fixed top-[30px] bottom-[30px] bg-secondary rounded-tr-[16px] rounded-br-[16px] py-6 overflow-y-auto max-h-screen">
         <div className="flex justify-center mb-6">
           <img src={logo} alt="Logo" />
         </div>
         <nav className="h-[75vh] w-[300px] min-[1700px]:w-[344px]">
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-2.5">
             {menuItems.map((item) => {
               const active = isMenuActive(item);
               const isSubmenuOpen = openMenu === item.key;
@@ -205,7 +211,7 @@ const Sidebar = () => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-8 pb-10"
+            className="flex items-center gap-4 px-5 py-3 rounded-xl text-red-500 mt-5 pb-10"
           >
             <CiLogout size={24} />
             <span className="text-lg">Log Out</span>

@@ -188,7 +188,7 @@ const initialData = [
   },
 ];
 
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 const Users = () => {
   const [srcText, setSrcText] = useState("");

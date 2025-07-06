@@ -165,7 +165,7 @@ const initialData = [
   },
 ];
 
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 const ShopOwner = () => {
   const [page, setPage] = useState(1);

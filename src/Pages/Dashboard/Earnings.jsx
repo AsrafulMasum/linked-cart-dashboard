@@ -166,7 +166,7 @@ const data = [
   },
 ];
 
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 const Earnings = () => {
   const [page, setPage] = useState(1);

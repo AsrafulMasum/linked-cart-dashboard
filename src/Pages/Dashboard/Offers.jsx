@@ -13,12 +13,155 @@ import {
   useUpdateBannerMutation,
 } from "../../redux/features/bannerApi";
 
+const data = [
+  {
+    _id: "1",
+    image: "https://via.placeholder.com/150x80?text=Banner+1",
+    name: "Summer Sale",
+    startDate: "2025-07-01",
+    endDate: "2025-07-15",
+  },
+  {
+    _id: "2",
+    image: "https://via.placeholder.com/150x80?text=Banner+2",
+    name: "Winter Fest",
+    startDate: "2025-12-01",
+    endDate: "2025-12-31",
+  },
+  {
+    _id: "3",
+    image: "https://via.placeholder.com/150x80?text=Banner+3",
+    name: "New Year Blast",
+    startDate: "2025-12-29",
+    endDate: "2026-01-05",
+  },
+  {
+    _id: "4",
+    image: "",
+    name: "Flash Deals",
+    startDate: "2025-08-10",
+    endDate: "2025-08-12",
+  },
+  {
+    _id: "5",
+    image: "https://via.placeholder.com/150x80?text=Banner+5",
+    name: "Mega Discounts",
+    startDate: "2025-09-01",
+    endDate: "2025-09-10",
+  },
+  {
+    _id: "6",
+    image: "https://via.placeholder.com/150x80?text=Banner+6",
+    name: "Eid Offer",
+    startDate: "2025-07-15",
+    endDate: "2025-07-25",
+  },
+  {
+    _id: "7",
+    image: "https://via.placeholder.com/150x80?text=Banner+7",
+    name: "Black Friday",
+    startDate: "2025-11-27",
+    endDate: "2025-11-30",
+  },
+  {
+    _id: "8",
+    image: "https://via.placeholder.com/150x80?text=Banner+8",
+    name: "Cyber Monday",
+    startDate: "2025-12-02",
+    endDate: "2025-12-03",
+  },
+  {
+    _id: "9",
+    image: "https://via.placeholder.com/150x80?text=Banner+9",
+    name: "Tech Deals",
+    startDate: "2025-10-01",
+    endDate: "2025-10-10",
+  },
+  {
+    _id: "10",
+    image: "https://via.placeholder.com/150x80?text=Banner+10",
+    name: "Back to School",
+    startDate: "2025-08-01",
+    endDate: "2025-08-31",
+  },
+  {
+    _id: "11",
+    image: "https://via.placeholder.com/150x80?text=Banner+11",
+    name: "Spring Sale",
+    startDate: "2025-03-15",
+    endDate: "2025-03-25",
+  },
+  {
+    _id: "12",
+    image: "https://via.placeholder.com/150x80?text=Banner+12",
+    name: "Valentine's Day",
+    startDate: "2025-02-10",
+    endDate: "2025-02-14",
+  },
+  {
+    _id: "13",
+    image: "https://via.placeholder.com/150x80?text=Banner+13",
+    name: "Mother's Day",
+    startDate: "2025-05-10",
+    endDate: "2025-05-12",
+  },
+  {
+    _id: "14",
+    image: "https://via.placeholder.com/150x80?text=Banner+14",
+    name: "Father's Day",
+    startDate: "2025-06-15",
+    endDate: "2025-06-17",
+  },
+  {
+    _id: "15",
+    image: "https://via.placeholder.com/150x80?text=Banner+15",
+    name: "Halloween",
+    startDate: "2025-10-28",
+    endDate: "2025-10-31",
+  },
+  {
+    _id: "16",
+    image: "https://via.placeholder.com/150x80?text=Banner+16",
+    name: "Diwali Sale",
+    startDate: "2025-11-01",
+    endDate: "2025-11-10",
+  },
+  {
+    _id: "17",
+    image: "https://via.placeholder.com/150x80?text=Banner+17",
+    name: "Clearance Sale",
+    startDate: "2025-07-20",
+    endDate: "2025-07-30",
+  },
+  {
+    _id: "18",
+    image: "https://via.placeholder.com/150x80?text=Banner+18",
+    name: "New Arrivals",
+    startDate: "2025-08-15",
+    endDate: "2025-08-22",
+  },
+  {
+    _id: "19",
+    image: "https://via.placeholder.com/150x80?text=Banner+19",
+    name: "Monsoon Mania",
+    startDate: "2025-07-05",
+    endDate: "2025-07-10",
+  },
+  {
+    _id: "20",
+    image: "https://via.placeholder.com/150x80?text=Banner+20",
+    name: "End of Season",
+    startDate: "2025-09-20",
+    endDate: "2025-09-30",
+  },
+];
+
 const Offers = () => {
-  const { data: bannerData, refetch } = useGetBannerQuery();
-  console.log(bannerData?.data);
+  // const { data: bannerData, refetch } = useGetBannerQuery();
+  // console.log(bannerData?.data);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 6;
-  const [data, setData] = useState(null);
+  const itemsPerPage = 8;
+  // const [data, setData] = useState(null);
   const [value, setValue] = useState(null);
   const [openAddModel, setOpenAddModel] = useState(false);
   const [form, setForm] = useState({
@@ -38,9 +181,9 @@ const Offers = () => {
   //   const [updateBanner] = useUpdateBannerMutation();
   //   const [deleteBanner] = useDeleteBannerMutation();
 
-  useEffect(() => {
-    setData(bannerData?.data);
-  }, [bannerData]);
+  // useEffect(() => {
+  //   setData(bannerData?.data);
+  // }, [bannerData]);
 
   // Handle image upload
   const onChange = (e) => {
@@ -204,13 +347,13 @@ const Offers = () => {
       },
       {
         title: "Start Date",
-        dataIndex: "name",
-        key: "name",
+        dataIndex: "startDate",
+        key: "startDate",
       },
       {
         title: "End Date",
-        dataIndex: "name",
-        key: "name",
+        dataIndex: "endDate",
+        key: "endDate",
       },
       {
         title: "Actions",
@@ -407,7 +550,9 @@ const Offers = () => {
                     cursor: "pointer",
                   }}
                 >
-                  {form.startDate || "Start Date"}
+                  <span className="text-gray-400">
+                    {form.startDate || "Start Date"}
+                  </span>
                 </div>
               </div>
 
@@ -428,7 +573,9 @@ const Offers = () => {
                     cursor: "pointer",
                   }}
                 >
-                  {form.endDate || "End Date"}
+                  <span className="text-gray-400">
+                    {form.endDate || "End Date"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -466,40 +613,38 @@ const Offers = () => {
         footer={false}
       >
         <div className="p-6">
-          <h1 className="text-[20px] font-medium mb-3">Edit Banner</h1>
-          <form onSubmit={handleEdit}>
+          <h1 className="text-[20px] font-medium mb-3">Edit Offer</h1>
+          <form onSubmit={handleSubmit}>
             <div className="flex justify-center items-center gap-10 mb-10">
-              <div className="h-32 w-32 flex items-center justify-center bg-gray-300 rounded-full relative border-2 border-[#3F857B]">
-                {imgEditURL ? (
+              <div className="h-32 w-32 flex items-center justify-center bg-gray-300 rounded-full relative">
+                {imgURL ? (
                   <img
                     className="w-full h-full z-10 rounded-full object-cover"
-                    src={imgEditURL}
+                    src={imgURL}
                     alt="preview img"
                   />
                 ) : (
                   <CiImageOn className="text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
                 )}
                 <input
-                  onChange={onEditImageChange}
+                  onChange={onChange}
                   type="file"
-                  id="img-edit"
+                  id="img"
                   name="image"
                   className="display-none absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 z-50"
                 />
-                <div className="absolute bottom-2 right-1 z-10">
-                  <FaRegEdit size={22} color="#FED12F" />
-                </div>
               </div>
             </div>
+
             <div style={{ marginBottom: "16px" }}>
               <label style={{ display: "block", marginBottom: "5px" }}>
-                Banner Name
+                Offer Name
               </label>
               <input
                 value={form.categoryName}
-                onChange={onEditInputChange}
+                onChange={onChange}
                 type="text"
-                placeholder="Enter Banner Name"
+                placeholder="Enter Offer Name"
                 style={{
                   border: "1px solid #E0E4EC",
                   padding: "10px",
@@ -512,6 +657,77 @@ const Offers = () => {
                 name="categoryName"
               />
             </div>
+
+            <div style={{ marginBottom: "16px" }}>
+              <label style={{ display: "block", marginBottom: "5px" }}>
+                Discount
+              </label>
+              <input
+                value={form.categoryName}
+                onChange={onChange}
+                type="text"
+                placeholder="Discount"
+                style={{
+                  border: "1px solid #E0E4EC",
+                  padding: "10px",
+                  height: "52px",
+                  background: "white",
+                  borderRadius: "8px",
+                  outline: "none",
+                  width: "100%",
+                }}
+                name="categoryName"
+              />
+            </div>
+
+            <div className="flex justify-between w-full mb-4 gap-4">
+              <div style={{ width: "100%" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  Start Date
+                </label>
+                <div
+                  onClick={() => setShowCalendarFor("start")}
+                  style={{
+                    border: "1px solid #E0E4EC",
+                    padding: "10px",
+                    height: "52px",
+                    background: "white",
+                    borderRadius: "8px",
+                    outline: "none",
+                    width: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  <span className="text-gray-400">
+                    {form.startDate || "Start Date"}
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ width: "100%" }}>
+                <label style={{ display: "block", marginBottom: "5px" }}>
+                  End Date
+                </label>
+                <div
+                  onClick={() => setShowCalendarFor("end")}
+                  style={{
+                    border: "1px solid #E0E4EC",
+                    padding: "10px",
+                    height: "52px",
+                    background: "white",
+                    borderRadius: "8px",
+                    outline: "none",
+                    width: "100%",
+                    cursor: "pointer",
+                  }}
+                >
+                  <span className="text-gray-400">
+                    {form.endDate || "End Date"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <input
               className="cursor-pointer"
               style={{
@@ -519,13 +735,13 @@ const Offers = () => {
                 width: "100%",
                 height: "44px",
                 marginTop: "10px",
-                background: "#3536FF",
+                background: "#0F665A",
                 color: "white",
                 borderRadius: "8px",
                 outline: "none",
                 padding: "10px 20px",
               }}
-              value="Update"
+              value="Submit"
               type="submit"
             />
           </form>

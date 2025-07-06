@@ -10,7 +10,7 @@ const COLORS = ["#0F665A", "#ffffff"];
 
 const RetentionPieChart = () => {
   return (
-    <div className="w-full mx-auto p-4 bg-secondary rounded-md">
+    <div className="w-full mx-auto p-3 bg-secondary rounded-md">
       <div className="flex items-center justify-between mb-8">
         <h4 className="text-xl font-semibold text-[#333333]">
           Retention Rate

@@ -17,7 +17,7 @@ const BestSellerChart = () => {
         </select>
       </div>
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-[15px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <img className="w-10 h-10 rounded-full" src={userImg} alt="" />
