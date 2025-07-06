@@ -43,12 +43,13 @@ const authApi = baseApi.injectEndpoints({
 
     resetPassword: builder.mutation({
       query: ({payload, token}) => {
+        console.log(token)
         return {
           method: "POST",
           url: "/auth/reset-password",
           body: payload,
           headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `${token}`,
           },
         };
       },
@@ -78,7 +79,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/user/resend-otp",
+          url: "/auth/resend-otp",
           body: data,
         };
       },

@@ -2,21 +2,46 @@ import { Form, Typography, Button } from "antd";
 import { useState, useCallback } from "react";
 import OTPInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
+import {
+  useOtpVerifyMutation,
+  useResendOTPMutation,
+} from "../../redux/features/authApi";
+import toast from "react-hot-toast";
 const { Text } = Typography;
 
 const VerifyOtp = () => {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const email = new URLSearchParams(location.search).get("email");
+  const [otpVerify] = useOtpVerifyMutation();
+  const [resendOTP] = useResendOTPMutation();
 
-  const onFinish = useCallback(() => {
-    // TODO: Add OTP verification API call here
-    navigate(`/auth/reset-password?email=${email}`);
-  }, [navigate, email]);
+  const onFinish = async () => {
+    const data = {
+      oneTimeCode: parseInt(otp),
+      email: email,
+    };
 
-  const handleResendEmail = useCallback(() => {
-    // TODO: Add resend OTP API call here
-  }, []);
+    try {
+      const res = await otpVerify(data).unwrap();
+      if (res?.success) {
+        navigate(`/auth/reset-password?token=${res?.data}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleResendEmail = async () => {
+    try {
+      const res = await resendOTP({ email }).unwrap();
+      if (res?.success) {
+        toast.success(res?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -25,7 +50,8 @@ const VerifyOtp = () => {
           Verify OTP
         </h1>
         <p className="text-[#757575] leading-[110%]">
-          Please check your email. We have sent a code to {email || "your email"}
+          Please check your email. We have sent a code to{" "}
+          {email || "your email"}
         </p>
       </div>
 

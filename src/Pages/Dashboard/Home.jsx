@@ -68,7 +68,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-5 gap-6 h-[120px] mb-4">
+      <div className="grid grid-cols-5 gap-6 max-h-[150px] mb-4">
         {statistics.map(({ title, amount, icon }) => (
           <div
             key={title}

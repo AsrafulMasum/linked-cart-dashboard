@@ -149,7 +149,7 @@ const Sidebar = () => {
         <div className="flex justify-center mb-6">
           <img src={logo} alt="Logo" />
         </div>
-        <nav className="h-[75vh] w-[300px] min-[1700px]:w-[344px]">
+        <nav className="h-[75vh] w-[250px] xl:w-[270px] 2xl:w-[300px] min-[1700px]:w-[344px]">
           <div className="flex flex-col gap-2.5">
             {menuItems.map((item) => {
               const active = isMenuActive(item);
