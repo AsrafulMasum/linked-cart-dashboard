@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useChangePasswordMutation } from "../../redux/features/authApi";
 
@@ -8,36 +8,36 @@ const ChangePassword = () => {
   const [errors, setErrors] = useState({ newPass: "", confirmPass: "" });
   const [form] = Form.useForm();
 
-  const validatePasswordChange = useCallback((values) => {
-    let newErrors = { newPass: "", confirmPass: "" };
+  const validatePasswordChange = (values) => {
+    let newErrors = { newPassword: "", confirmPassword: "" };
 
-    if (values?.currentPass === values.newPass) {
-      newErrors.newPass = "The New password is similar to the old Password";
+    if (values?.currentPass === values.newPassword) {
+      newErrors.newPassword = "The New password is similar to the old Password";
     }
-    if (values?.newPass !== values.confirmPass) {
-      newErrors.confirmPass = "New Password and Confirm Password Don't Match";
+    if (values?.newPassword !== values.confirmPassword) {
+      newErrors.confirmPassword = "New Password and Confirm Password Don't Match";
     }
     setErrors(newErrors);
     return newErrors;
-  }, []);
+  };
 
-  const onFinish = useCallback(
-    async (values) => {
-      const validation = validatePasswordChange(values);
-      if (!validation.newPass && !validation.confirmPass) {
-        try {
-          const { status, message } = await changePassword({ ...values }).unwrap();
-          if (status) {
-            toast.success(message);
-            form.resetFields();
-          }
-        } catch (error) {
-          toast.error(error?.data?.message || "Failed to change password");
+  const onFinish = async (values) => {
+    const validation = validatePasswordChange(values);
+    if (!validation.newPassword && !validation.confirmPassword) {
+      try {
+        const data = await changePassword({
+          ...values,
+        }).unwrap();
+
+        if (data?.success) {
+          toast.success(data?.message);
+          form.resetFields();
         }
+      } catch (error) {
+        toast.error(error?.data?.message || "Failed to change password");
       }
-    },
-    [changePassword, form, validatePasswordChange]
-  );
+    }
+  };
 
   return (
     <div>
@@ -48,7 +48,7 @@ const ChangePassword = () => {
         className="w-[70%] mx-auto mt-40"
       >
         <Form.Item
-          name="currentPass"
+          name="currentPassword"
           label={
             <p className="text-xl font-medium text-sub_title">
               Current Password
@@ -76,7 +76,7 @@ const ChangePassword = () => {
         </Form.Item>
 
         <Form.Item
-          name="newPass"
+          name="newPassword"
           rules={[
             {
               required: true,
@@ -113,7 +113,7 @@ const ChangePassword = () => {
               Confirm Password
             </p>
           }
-          name="confirmPass"
+          name="confirmPassword"
           rules={[
             {
               required: true,

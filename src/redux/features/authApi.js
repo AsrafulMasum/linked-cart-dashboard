@@ -58,7 +58,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           method: "POST",
-          url: "/auth/change-password",
+          url: "/user/change-password",
           body: data,
         };
       },
