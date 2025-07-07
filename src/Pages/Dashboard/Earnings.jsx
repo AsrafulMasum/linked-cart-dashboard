@@ -1,7 +1,8 @@
 import { ConfigProvider, Modal, Select, Table } from "antd";
 import moment from "moment";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
+import { useGetEarningsQuery } from "../../redux/features/earningsApi";
 
 const data = [
   {
@@ -172,13 +173,16 @@ const Earnings = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
 
-  const handleInfoClick = useCallback((record) => {
-    setValue(record);
-  }, []);
+  const { data: ordersData } = useGetEarningsQuery();
+  const orders = ordersData?.data?.orders;
 
-  const handleModalClose = useCallback(() => {
+  const handleInfoClick = (record) => {
+    setValue(record);
+  };
+
+  const handleModalClose = () => {
     setValue(null);
-  }, []);
+  };
 
   const columns = useMemo(
     () => [
@@ -197,13 +201,14 @@ const Earnings = () => {
       },
       {
         title: "Transaction ID",
-        dataIndex: "transactionID",
-        key: "transactionID",
+        dataIndex: "trxId",
+        key: "trxId",
       },
       {
         title: "Email",
         dataIndex: "email",
         key: "email",
+        render: (_, record) => <p>{record?.user?.email}</p>,
       },
       {
         title: "Date",
@@ -213,8 +218,8 @@ const Earnings = () => {
       },
       {
         title: "Amount",
-        dataIndex: "amount",
-        key: "amount",
+        dataIndex: "price",
+        key: "price",
       },
       {
         title: "Actions",
@@ -259,7 +264,7 @@ const Earnings = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={orders}
           pagination={{
             current: page,
             pageSize: itemsPerPage,
@@ -281,15 +286,15 @@ const Earnings = () => {
             </div>
             <div>
               <p className="pb-[5px] text-right">
-                {value?.transactionID || "TXN5001"}
+                {value?.trxId || "Not Added Yet"}
               </p>
               <p className="pb-[5px] text-right">
-                {value?.userEmail || "henry.green@example.com"}
+                {value?.user?.email || "Not Added Yet"}
               </p>
               <p className="pb-[5px] text-right">
                 {value?.createdAt ? moment(value.createdAt).format("L") : ""}
               </p>
-              <p className="text-right">{value?.amount || "$50.00"}</p>
+              <p className="text-right">{value?.price || "Not Added Yet"}</p>
             </div>
           </div>
         </div>

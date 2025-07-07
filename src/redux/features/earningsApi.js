@@ -5,7 +5,7 @@ const earningsApi = baseApi.injectEndpoints({
     getEarnings: builder.query({
       query: () => {
         return {
-          url: "/",
+          url: "/order/admin-orders?status=Delivered",
           method: "GET",
         };
       },
