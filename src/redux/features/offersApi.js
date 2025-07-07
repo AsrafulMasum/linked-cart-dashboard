@@ -12,12 +12,11 @@ const offersApi = baseApi.injectEndpoints({
     }),
 
     createOffer: builder.mutation({
-      query: (data) => {
-        console.log(data);
+      query: (payload) => {
         return {
           method: "POST",
-          url: "/package",
-          body: data,
+          url: "/offer",
+          body: payload,
         };
       },
     }),
@@ -36,7 +35,7 @@ const offersApi = baseApi.injectEndpoints({
       query: (id) => {
         return {
           method: "DELETE",
-          url: `/package/${id}`,
+          url: `/offer/${id}`,
         };
       },
     }),

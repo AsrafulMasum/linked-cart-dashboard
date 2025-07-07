@@ -5,167 +5,30 @@ import { PlusOutlined } from "@ant-design/icons";
 import { CiEdit, CiImageOn } from "react-icons/ci";
 import { imageUrl } from "../../redux/api/baseApi";
 import toast from "react-hot-toast";
+import moment from "moment";
 import { FaRegEdit } from "react-icons/fa";
-import { useGetOffersQuery } from "../../redux/features/offersApi";
-
-const data = [
-  {
-    _id: "1",
-    image: "https://via.placeholder.com/150x80?text=Banner+1",
-    name: "Summer Sale",
-    startDate: "2025-07-01",
-    endDate: "2025-07-15",
-  },
-  {
-    _id: "2",
-    image: "https://via.placeholder.com/150x80?text=Banner+2",
-    name: "Winter Fest",
-    startDate: "2025-12-01",
-    endDate: "2025-12-31",
-  },
-  {
-    _id: "3",
-    image: "https://via.placeholder.com/150x80?text=Banner+3",
-    name: "New Year Blast",
-    startDate: "2025-12-29",
-    endDate: "2026-01-05",
-  },
-  {
-    _id: "4",
-    image: "",
-    name: "Flash Deals",
-    startDate: "2025-08-10",
-    endDate: "2025-08-12",
-  },
-  {
-    _id: "5",
-    image: "https://via.placeholder.com/150x80?text=Banner+5",
-    name: "Mega Discounts",
-    startDate: "2025-09-01",
-    endDate: "2025-09-10",
-  },
-  {
-    _id: "6",
-    image: "https://via.placeholder.com/150x80?text=Banner+6",
-    name: "Eid Offer",
-    startDate: "2025-07-15",
-    endDate: "2025-07-25",
-  },
-  {
-    _id: "7",
-    image: "https://via.placeholder.com/150x80?text=Banner+7",
-    name: "Black Friday",
-    startDate: "2025-11-27",
-    endDate: "2025-11-30",
-  },
-  {
-    _id: "8",
-    image: "https://via.placeholder.com/150x80?text=Banner+8",
-    name: "Cyber Monday",
-    startDate: "2025-12-02",
-    endDate: "2025-12-03",
-  },
-  {
-    _id: "9",
-    image: "https://via.placeholder.com/150x80?text=Banner+9",
-    name: "Tech Deals",
-    startDate: "2025-10-01",
-    endDate: "2025-10-10",
-  },
-  {
-    _id: "10",
-    image: "https://via.placeholder.com/150x80?text=Banner+10",
-    name: "Back to School",
-    startDate: "2025-08-01",
-    endDate: "2025-08-31",
-  },
-  {
-    _id: "11",
-    image: "https://via.placeholder.com/150x80?text=Banner+11",
-    name: "Spring Sale",
-    startDate: "2025-03-15",
-    endDate: "2025-03-25",
-  },
-  {
-    _id: "12",
-    image: "https://via.placeholder.com/150x80?text=Banner+12",
-    name: "Valentine's Day",
-    startDate: "2025-02-10",
-    endDate: "2025-02-14",
-  },
-  {
-    _id: "13",
-    image: "https://via.placeholder.com/150x80?text=Banner+13",
-    name: "Mother's Day",
-    startDate: "2025-05-10",
-    endDate: "2025-05-12",
-  },
-  {
-    _id: "14",
-    image: "https://via.placeholder.com/150x80?text=Banner+14",
-    name: "Father's Day",
-    startDate: "2025-06-15",
-    endDate: "2025-06-17",
-  },
-  {
-    _id: "15",
-    image: "https://via.placeholder.com/150x80?text=Banner+15",
-    name: "Halloween",
-    startDate: "2025-10-28",
-    endDate: "2025-10-31",
-  },
-  {
-    _id: "16",
-    image: "https://via.placeholder.com/150x80?text=Banner+16",
-    name: "Diwali Sale",
-    startDate: "2025-11-01",
-    endDate: "2025-11-10",
-  },
-  {
-    _id: "17",
-    image: "https://via.placeholder.com/150x80?text=Banner+17",
-    name: "Clearance Sale",
-    startDate: "2025-07-20",
-    endDate: "2025-07-30",
-  },
-  {
-    _id: "18",
-    image: "https://via.placeholder.com/150x80?text=Banner+18",
-    name: "New Arrivals",
-    startDate: "2025-08-15",
-    endDate: "2025-08-22",
-  },
-  {
-    _id: "19",
-    image: "https://via.placeholder.com/150x80?text=Banner+19",
-    name: "Monsoon Mania",
-    startDate: "2025-07-05",
-    endDate: "2025-07-10",
-  },
-  {
-    _id: "20",
-    image: "https://via.placeholder.com/150x80?text=Banner+20",
-    name: "End of Season",
-    startDate: "2025-09-20",
-    endDate: "2025-09-30",
-  },
-];
+import {
+  useCreateOfferMutation,
+  useDeleteOfferMutation,
+  useGetOffersQuery,
+} from "../../redux/features/offersApi";
+import dayjs from "dayjs";
 
 const Offers = () => {
-  const { data: offersData } = useGetOffersQuery();
+  const { data: offersData, refetch } = useGetOffersQuery();
   const offers = offersData?.data;
-  console.log(offers);
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
-  // const [data, setData] = useState(null);
   const [value, setValue] = useState(null);
   const [openAddModel, setOpenAddModel] = useState(false);
   const [form, setForm] = useState({
-    categoryName: "",
+    offerName: "",
     image: "",
     startDate: "",
     endDate: "",
+    discount: "",
   });
+
   const [imgURL, setImgURL] = useState();
   const [showDelete, setShowDelete] = useState(false);
   const [deleteId, setDeleteId] = useState("");
@@ -173,137 +36,140 @@ const Offers = () => {
   const [editImageFile, setEditImageFile] = useState(null);
   const [imgEditURL, setImgEditURL] = useState("");
   const [showCalendarFor, setShowCalendarFor] = useState(null);
-  //   const [createBanner] = useCreateBannerMutation();
-  //   const [updateBanner] = useUpdateBannerMutation();
-  //   const [deleteBanner] = useDeleteBannerMutation();
-
-  // useEffect(() => {
-  //   setData(bannerData?.data);
-  // }, [bannerData]);
+  const [createOffer] = useCreateOfferMutation();
+  const [deleteOffer] = useDeleteOfferMutation()
 
   // Handle image upload
-  const onChange = (e) => {
+  const handleAdd = (e) => {
     const { name, value, files } = e.target;
-    if (name === "categoryName") {
-      setForm((prev) => ({ ...prev, categoryName: value }));
-    } else if (name === "image" && files && files[0]) {
+
+    if (name === "image" && files && files[0]) {
       const file = files[0];
       const imgUrl = URL.createObjectURL(file);
       setImgURL(imgUrl);
       setImageFile(file);
-      setForm((prev) => ({ ...prev, serviceImage: imgUrl }));
+      setForm((prev) => ({ ...prev, [name]: imgUrl }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  // Add new service
+  // Add new offers
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("name", form.categoryName);
-    //   if (imageFile) {
-    //     formData.append("image", imageFile);
-    //   }
-    //   await createBanner(formData).unwrap();
-    //   setOpenAddModel(false);
-    //   setForm({ categoryName: "", image: "" });
-    //   setImgURL("");
-    //   setImageFile(null);
-    //   refetch();
-    //   toast.success("Banner added successfully");
-    // } catch (err) {
-    //   console.error("Add banner failed", err);
-    //   toast.error("Add banner failed");
-    // }
+    try {
+      const formData = new FormData();
+      formData.append("name", form.offerName);
+      formData.append("discount", form.discount);
+      formData.append("startDate", form.startDate);
+      formData.append("endDate", form.endDate);
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+      const res = await createOffer(formData).unwrap();
+      if (res?.success) {
+        setOpenAddModel(false);
+        setForm({
+          offerName: "",
+          imageUrl: "",
+          discount: "",
+          startDate: "",
+          endDate: "",
+        });
+        setImgURL("");
+        setImageFile(null);
+        refetch();
+        toast.success("Offer added successfully");
+      }
+    } catch (err) {
+      console.error("Add offer failed", err);
+      toast.error("Add offer failed");
+    }
   };
 
-  // Edit service
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("name", form.categoryName);
-    //   if (editImageFile) {
-    //     formData.append("image", editImageFile);
-    //   }
+  // // Edit service
+  // const handleEdit = async (e) => {
+  //   e.preventDefault();
+  //   // try {
+  //   //   const formData = new FormData();
+  //   //   formData.append("name", form.offerName);
+  //   //   if (editImageFile) {
+  //   //     formData.append("image", editImageFile);
+  //   //   }
 
-    //   await updateBanner({
-    //     id: value._id,
-    //     body: formData,
-    //   }).unwrap();
-    //   setValue(null);
-    //   setForm({ categoryName: "", image: "" });
-    //   setImgEditURL("");
-    //   setEditImageFile(null);
-    //   refetch();
-    //   toast.success("Service updated successfully");
-    // } catch (err) {
-    //   console.error("Edit category failed", err);
-    // }
-  };
+  //   //   await updateBanner({
+  //   //     id: value._id,
+  //   //     body: formData,
+  //   //   }).unwrap();
+  //   //   setValue(null);
+  //   //   setForm({ categoryName: "", image: "" });
+  //   //   setImgEditURL("");
+  //   //   setEditImageFile(null);
+  //   //   refetch();
+  //   //   toast.success("Service updated successfully");
+  //   // } catch (err) {
+  //   //   console.error("Edit category failed", err);
+  //   // }
+  // };
 
   // Delete service
   const handleDelete = async () => {
-    // try {
-    //   await deleteBanner(deleteId).unwrap();
-    //   setShowDelete(false);
-    //   setDeleteId("");
-    //   refetch();
-    //   toast.success("Banner deleted successfully");
-    // } catch (err) {
-    //   console.error("Delete banner failed.", err);
-    //   toast.error("Deletion banner failed.");
-    // }
+    try {
+      await deleteOffer(deleteId).unwrap();
+      setShowDelete(false);
+      setDeleteId("");
+      refetch();
+      toast.success("Banner deleted successfully");
+    } catch (err) {
+      console.error("Delete banner failed.", err);
+      toast.error("Deletion banner failed.");
+    }
   };
 
   // Open edit modal and set form values
-  const openEditModal = (record) => {
-    setValue(record);
-    setForm({
-      categoryName: record.CategoryName || "",
-      image: record.image || "",
-    });
-    setImgEditURL(
-      record.image
-        ? record.image.startsWith("http")
-          ? record.image
-          : `${imageUrl}${record.image}`
-        : ""
-    );
-    setEditImageFile(null);
-  };
+  // const openEditModal = (record) => {
+  //   // setValue(record);
+  //   // setForm({
+  //   //   categoryName: record.CategoryName || "",
+  //   //   image: record.image || "",
+  //   // });
+  //   // setImgEditURL(
+  //   //   record.image
+  //   //     ? record.image.startsWith("http")
+  //   //       ? record.image
+  //   //       : `${imageUrl}${record.image}`
+  //   //     : ""
+  //   // );
+  //   // setEditImageFile(null);
+  // };
 
   const onEditImageChange = (e) => {
-    const { files } = e.target;
-    if (files && files[0]) {
-      const file = files[0];
-      const imgUrl = URL.createObjectURL(file);
-      setImgEditURL(imgUrl);
-      setEditImageFile(file);
-    }
+    // const { files } = e.target;
+    // if (files && files[0]) {
+    //   const file = files[0];
+    //   const imgUrl = URL.createObjectURL(file);
+    //   setImgEditURL(imgUrl);
+    //   setEditImageFile(file);
+    // }
   };
 
   const onEditInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "categoryName") {
-      setForm((prev) => ({ ...prev, categoryName: value }));
-    }
+    // const { name, value } = e.target;
+    // if (name === "categoryName") {
+    //   setForm((prev) => ({ ...prev, categoryName: value }));
+    // }
   };
 
   const handleDateChange = (value) => {
-    console.log(value);
-    if (value) {
-      setShowCalendarFor(null);
+    const formattedDate = dayjs(value).format("YYYY-MM-DD");
+
+    if (showCalendarFor === "start") {
+      setForm((prev) => ({ ...prev, startDate: formattedDate }));
+    } else if (showCalendarFor === "end") {
+      setForm((prev) => ({ ...prev, endDate: formattedDate }));
     }
-    // const formattedDate = dayjs(value).format("YYYY-MM-DD");
 
-    // if (showCalendarFor === "start") {
-    //   setForm((prev) => ({ ...prev, startDate: formattedDate }));
-    // } else if (showCalendarFor === "end") {
-    //   setForm((prev) => ({ ...prev, endDate: formattedDate }));
-    // }
-
-    // setShowCalendarFor(null);
+    setShowCalendarFor(null);
   };
 
   const columns = useMemo(
@@ -345,11 +211,13 @@ const Offers = () => {
         title: "Start Date",
         dataIndex: "startDate",
         key: "startDate",
+        render: (_, record) => <p>{moment(record?.startDate).format("L")}</p>,
       },
       {
         title: "End Date",
         dataIndex: "endDate",
         key: "endDate",
+        render: (_, record) => <p>{moment(record?.endDate).format("L")}</p>,
       },
       {
         title: "Actions",
@@ -375,7 +243,7 @@ const Offers = () => {
         ),
       },
     ],
-    [page, itemsPerPage, openEditModal]
+    [page, itemsPerPage]
   );
 
   return (
@@ -403,8 +271,6 @@ const Offers = () => {
           <Button
             onClick={() => {
               setOpenAddModel(true);
-              setForm({ category: "", serviceType: "", serviceImage: "" });
-              setImgURL("");
             }}
             style={{
               width: "177px",
@@ -475,7 +341,7 @@ const Offers = () => {
                   <CiImageOn className="text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
                 )}
                 <input
-                  onChange={onChange}
+                  onChange={handleAdd}
                   type="file"
                   id="img"
                   name="image"
@@ -489,9 +355,10 @@ const Offers = () => {
                 Offer Name
               </label>
               <input
-                value={form.categoryName}
-                onChange={onChange}
+                value={form.offerName}
+                onChange={handleAdd}
                 type="text"
+                name="offerName"
                 placeholder="Enter Offer Name"
                 style={{
                   border: "1px solid #E0E4EC",
@@ -502,7 +369,6 @@ const Offers = () => {
                   outline: "none",
                   width: "100%",
                 }}
-                name="categoryName"
               />
             </div>
 
@@ -511,9 +377,10 @@ const Offers = () => {
                 Discount
               </label>
               <input
-                value={form.categoryName}
-                onChange={onChange}
-                type="text"
+                value={form.discount}
+                onChange={handleAdd}
+                type="number"
+                name="discount"
                 placeholder="Discount"
                 style={{
                   border: "1px solid #E0E4EC",
@@ -524,7 +391,6 @@ const Offers = () => {
                   outline: "none",
                   width: "100%",
                 }}
-                name="categoryName"
               />
             </div>
 
@@ -597,7 +463,7 @@ const Offers = () => {
       </Modal>
 
       {/* Edit Modal */}
-      <Modal
+      {/* <Modal
         centered
         open={!!value}
         onCancel={() => {
@@ -742,7 +608,7 @@ const Offers = () => {
             />
           </form>
         </div>
-      </Modal>
+      </Modal> */}
 
       {/* Delete Modal */}
       <Modal
@@ -761,7 +627,7 @@ const Offers = () => {
           </p>
           <button
             onClick={handleDelete}
-            className="bg-[#3536FF] py-2 px-5 text-white rounded-md"
+            className="bg-[#0F665A] py-2 px-5 text-white rounded-md"
           >
             Confirm
           </button>
