@@ -6,12 +6,7 @@ import { CiEdit, CiImageOn } from "react-icons/ci";
 import { imageUrl } from "../../redux/api/baseApi";
 import toast from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
-import {
-  useCreateBannerMutation,
-  useGetBannerQuery,
-  useDeleteBannerMutation,
-  useUpdateBannerMutation,
-} from "../../redux/features/bannerApi";
+import { useGetOffersQuery } from "../../redux/features/offersApi";
 
 const data = [
   {
@@ -157,8 +152,9 @@ const data = [
 ];
 
 const Offers = () => {
-  // const { data: bannerData, refetch } = useGetBannerQuery();
-  // console.log(bannerData?.data);
+  const { data: offersData } = useGetOffersQuery();
+  const offers = offersData?.data;
+  console.log(offers);
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   // const [data, setData] = useState(null);
@@ -445,7 +441,7 @@ const Offers = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={offers}
           rowKey="_id"
           pagination={{
             current: page,
