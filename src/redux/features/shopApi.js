@@ -5,7 +5,7 @@ const shopApi = baseApi.injectEndpoints({
     getShop: builder.query({
       query: () => {
         return {
-          url: "/",
+          url: "/user/shops",
           method: "GET",
         };
       },
