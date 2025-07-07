@@ -3,9 +3,9 @@ import { baseApi } from "../api/baseApi";
 const orderListApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrderList: builder.query({
-      query: () => {
+      query: (status) => {
         return {
-          url: "/",
+          url: `/order/admin-orders?status=${status}`,
           method: "GET",
         };
       },

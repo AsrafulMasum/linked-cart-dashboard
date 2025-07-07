@@ -1,5 +1,4 @@
 import { imageUrl } from "../../redux/api/baseApi";
-import shopImage from "../../assets/shopImage.png";
 import { useGetShopQuery } from "../../redux/features/shopApi";
 
 const RetailShops = () => {
