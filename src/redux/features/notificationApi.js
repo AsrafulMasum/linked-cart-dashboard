@@ -5,7 +5,7 @@ const notificationApi = baseApi.injectEndpoints({
     getNotifications: builder.query({
       query: () => {
         return {
-          url: "/notification/admin",
+          url: "/notification",
           method: "GET",
         };
       },
@@ -17,7 +17,7 @@ const notificationApi = baseApi.injectEndpoints({
     readNotification: builder.mutation({
       query: () => {
         return {
-          url: "/notification/admin",
+          url: "/notification",
           method: "PATCH",
         };
       },
