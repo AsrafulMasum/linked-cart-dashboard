@@ -24,8 +24,8 @@ const offersApi = baseApi.injectEndpoints({
     updateOffer: builder.mutation({
       query: (data) => {
         return {
-          method: "PUT",
-          url: `/package/${data.id}`,
+          method: "PATCH",
+          url: `/offer/${data.id}`,
           body: data?.body,
         };
       },

@@ -11,6 +11,7 @@ import {
   useCreateOfferMutation,
   useDeleteOfferMutation,
   useGetOffersQuery,
+  useUpdateOfferMutation,
 } from "../../redux/features/offersApi";
 import dayjs from "dayjs";
 
@@ -21,6 +22,7 @@ const Offers = () => {
   const itemsPerPage = 8;
   const [value, setValue] = useState(null);
   const [openAddModel, setOpenAddModel] = useState(false);
+  const [openEditModel, setOpenEditModel] = useState(false);
   const [form, setForm] = useState({
     offerName: "",
     image: "",
@@ -36,8 +38,10 @@ const Offers = () => {
   const [editImageFile, setEditImageFile] = useState(null);
   const [imgEditURL, setImgEditURL] = useState("");
   const [showCalendarFor, setShowCalendarFor] = useState(null);
+
   const [createOffer] = useCreateOfferMutation();
-  const [deleteOffer] = useDeleteOfferMutation()
+  const [updateOffer] = useUpdateOfferMutation();
+  const [deleteOffer] = useDeleteOfferMutation();
 
   // Handle image upload
   const handleAdd = (e) => {
@@ -88,29 +92,92 @@ const Offers = () => {
   };
 
   // // Edit service
-  // const handleEdit = async (e) => {
-  //   e.preventDefault();
-  //   // try {
-  //   //   const formData = new FormData();
-  //   //   formData.append("name", form.offerName);
-  //   //   if (editImageFile) {
-  //   //     formData.append("image", editImageFile);
-  //   //   }
+  const handleEdit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("name", form.offerName);
+      formData.append("discount", form.discount);
+      formData.append("startDate", form.startDate);
+      formData.append("endDate", form.endDate);
+      if (editImageFile) {
+        formData.append("image", editImageFile);
+      }
 
-  //   //   await updateBanner({
-  //   //     id: value._id,
-  //   //     body: formData,
-  //   //   }).unwrap();
-  //   //   setValue(null);
-  //   //   setForm({ categoryName: "", image: "" });
-  //   //   setImgEditURL("");
-  //   //   setEditImageFile(null);
-  //   //   refetch();
-  //   //   toast.success("Service updated successfully");
-  //   // } catch (err) {
-  //   //   console.error("Edit category failed", err);
-  //   // }
-  // };
+      await updateOffer({
+        id: value._id,
+        body: formData,
+      }).unwrap();
+      setValue(null);
+      setForm({
+        offerName: "",
+        imgEditURL: "",
+        discount: "",
+        startDate: "",
+        endDate: "",
+      });
+      setImgEditURL("");
+      setEditImageFile(null);
+      refetch();
+      toast.success("Offer updated successfully");
+    } catch (err) {
+      console.error("Edit offer failed", err);
+    }
+  };
+
+  // Open edit modal and set form values
+  const openEditModal = (record) => {
+    setValue(record);
+    setForm({
+      offerName: record?.name,
+      image: record?.image,
+      discount: record?.discount,
+      startDate: record?.startDate
+        ? moment(record?.startDate).format("YYYY-MM-DD")
+        : "",
+      endDate: record?.endDate
+        ? moment(record?.endDate).format("YYYY-MM-DD")
+        : "",
+    });
+    setImgEditURL(
+      record?.image
+        ? record?.image.startsWith("http")
+          ? record?.image
+          : `${imageUrl}${record?.image}`
+        : ""
+    );
+    setEditImageFile(null);
+    setOpenEditModel(true);
+  };
+
+  const onEditImageChange = (e) => {
+    const { files } = e.target;
+    if (files && files[0]) {
+      const file = files[0];
+      const imgUrl = URL.createObjectURL(file);
+      setImgEditURL(imgUrl);
+      setEditImageFile(file);
+    }
+  };
+
+  const onEditInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name !== "image") {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleDateChange = (value) => {
+    const formattedDate = dayjs(value).format("YYYY-MM-DD");
+
+    if (showCalendarFor === "start") {
+      setForm((prev) => ({ ...prev, startDate: formattedDate }));
+    } else if (showCalendarFor === "end") {
+      setForm((prev) => ({ ...prev, endDate: formattedDate }));
+    }
+
+    setShowCalendarFor(null);
+  };
 
   // Delete service
   const handleDelete = async () => {
@@ -124,52 +191,6 @@ const Offers = () => {
       console.error("Delete banner failed.", err);
       toast.error("Deletion banner failed.");
     }
-  };
-
-  // Open edit modal and set form values
-  // const openEditModal = (record) => {
-  //   // setValue(record);
-  //   // setForm({
-  //   //   categoryName: record.CategoryName || "",
-  //   //   image: record.image || "",
-  //   // });
-  //   // setImgEditURL(
-  //   //   record.image
-  //   //     ? record.image.startsWith("http")
-  //   //       ? record.image
-  //   //       : `${imageUrl}${record.image}`
-  //   //     : ""
-  //   // );
-  //   // setEditImageFile(null);
-  // };
-
-  const onEditImageChange = (e) => {
-    // const { files } = e.target;
-    // if (files && files[0]) {
-    //   const file = files[0];
-    //   const imgUrl = URL.createObjectURL(file);
-    //   setImgEditURL(imgUrl);
-    //   setEditImageFile(file);
-    // }
-  };
-
-  const onEditInputChange = (e) => {
-    // const { name, value } = e.target;
-    // if (name === "categoryName") {
-    //   setForm((prev) => ({ ...prev, categoryName: value }));
-    // }
-  };
-
-  const handleDateChange = (value) => {
-    const formattedDate = dayjs(value).format("YYYY-MM-DD");
-
-    if (showCalendarFor === "start") {
-      setForm((prev) => ({ ...prev, startDate: formattedDate }));
-    } else if (showCalendarFor === "end") {
-      setForm((prev) => ({ ...prev, endDate: formattedDate }));
-    }
-
-    setShowCalendarFor(null);
   };
 
   const columns = useMemo(
@@ -463,7 +484,7 @@ const Offers = () => {
       </Modal>
 
       {/* Edit Modal */}
-      {/* <Modal
+      <Modal
         centered
         open={!!value}
         onCancel={() => {
@@ -476,20 +497,20 @@ const Offers = () => {
       >
         <div className="p-6">
           <h1 className="text-[20px] font-medium mb-3">Edit Offer</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleEdit}>
             <div className="flex justify-center items-center gap-10 mb-10">
               <div className="h-32 w-32 flex items-center justify-center bg-gray-300 rounded-full relative">
-                {imgURL ? (
+                {imgEditURL ? (
                   <img
                     className="w-full h-full z-10 rounded-full object-cover"
-                    src={imgURL}
+                    src={imgEditURL}
                     alt="preview img"
                   />
                 ) : (
                   <CiImageOn className="text-3xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
                 )}
                 <input
-                  onChange={onChange}
+                  onChange={onEditImageChange}
                   type="file"
                   id="img"
                   name="image"
@@ -503,8 +524,8 @@ const Offers = () => {
                 Offer Name
               </label>
               <input
-                value={form.categoryName}
-                onChange={onChange}
+                value={form.offerName}
+                onChange={onEditInputChange}
                 type="text"
                 placeholder="Enter Offer Name"
                 style={{
@@ -516,7 +537,7 @@ const Offers = () => {
                   outline: "none",
                   width: "100%",
                 }}
-                name="categoryName"
+                name="offerName"
               />
             </div>
 
@@ -525,9 +546,9 @@ const Offers = () => {
                 Discount
               </label>
               <input
-                value={form.categoryName}
-                onChange={onChange}
-                type="text"
+                value={form.discount}
+                onChange={onEditInputChange}
+                type="number"
                 placeholder="Discount"
                 style={{
                   border: "1px solid #E0E4EC",
@@ -538,7 +559,7 @@ const Offers = () => {
                   outline: "none",
                   width: "100%",
                 }}
-                name="categoryName"
+                name="discount"
               />
             </div>
 
@@ -608,7 +629,7 @@ const Offers = () => {
             />
           </form>
         </div>
-      </Modal> */}
+      </Modal>
 
       {/* Delete Modal */}
       <Modal
