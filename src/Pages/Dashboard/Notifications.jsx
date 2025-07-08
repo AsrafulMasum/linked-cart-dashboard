@@ -18,7 +18,7 @@ const Notifications = () => {
     (page - 1) * pageSize,
     (page - 1) * pageSize + pageSize
   );
-
+  console.log(notificationData);
   const handleRead = async () => {
     try {
       const { success, message } = await readNotification().unwrap();
@@ -49,7 +49,9 @@ const Notifications = () => {
         {paginatedData?.map((notification, index) => (
           <div
             key={notification?._id}
-            className="border-b-[1px] pb-2 border-[#d9d9d9] flex items-center gap-3"
+            className={`p-3 rounded-lg flex items-center gap-3 ${
+              notification?.read ? "bg-transparent" : "bg-[#E7F0EF]"
+            }`}
           >
             <img
               className="object-cover"
@@ -64,7 +66,7 @@ const Notifications = () => {
             />
             <div>
               <p>
-                <span>{notification.user}</span> {notification.message}
+                <span>{notification.user}</span> {notification.text}
               </p>
               <p style={{ color: "gray", marginTop: "4px" }}>
                 {formatDistanceToNow(new Date(notification?.createdAt), {

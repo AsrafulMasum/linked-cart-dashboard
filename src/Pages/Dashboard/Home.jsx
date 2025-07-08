@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import totalUsers from "../../assets/totalUsers.svg";
 import totalServices from "../../assets/totalServices.svg";
 import earnings from "../../assets/earnings.svg";
@@ -6,12 +6,26 @@ import sold from "../../assets/sold.svg";
 import orders from "../../assets/orders.svg";
 import UsersBarChart from "../../components/charts/UsersBarChart";
 import EarningLineChart from "../../components/charts/EarningLineChart";
+import { useStatisticsQuery } from "../../redux/features/statisticsApi";
 
 const Home = () => {
-  const statistics = useMemo(() => [
+  const [userYear, setUserYear] = useState("");
+  const [sellerYear, setSellerYear] = useState("");
+  const { data } = useStatisticsQuery({ userYear, sellerYear });
+  const { summury, totalSellbyMonth, totalUsersAndShopsDay } = data?.data || {};
+
+  const handleUserYear = (year) => {
+    setUserYear(year);
+  };
+
+  const handleSellerYear = (year) => {
+    setSellerYear(year);
+  };
+
+  const statistics = [
     {
       title: "Total Products",
-      amount: "88K",
+      amount: `${summury?.totalProducts}`,
       icon: (
         <img
           className="bg-primary p-[15px] rounded-full"
@@ -22,7 +36,7 @@ const Home = () => {
     },
     {
       title: "Total Users",
-      amount: "28K",
+      amount: `${summury?.totalUsers}`,
       icon: (
         <img
           className="bg-primary p-[15px] rounded-full"
@@ -33,7 +47,7 @@ const Home = () => {
     },
     {
       title: "Total Earnings",
-      amount: "$457.89K",
+      amount: `${summury?.totalEarnings}`,
       icon: (
         <img
           className="bg-primary p-[15px] rounded-full"
@@ -44,7 +58,7 @@ const Home = () => {
     },
     {
       title: "Total Orders",
-      amount: "220",
+      amount: `${summury?.totalOrders}`,
       icon: (
         <img
           className="bg-primary p-[15px] rounded-full"
@@ -55,7 +69,7 @@ const Home = () => {
     },
     {
       title: "Total Sold",
-      amount: "180",
+      amount: `${summury?.totalSolds}`,
       icon: (
         <img
           className="bg-primary p-[15px] rounded-full"
@@ -64,7 +78,7 @@ const Home = () => {
         />
       ),
     },
-  ], []);
+  ];
 
   return (
     <div>
@@ -77,13 +91,21 @@ const Home = () => {
             <div>{icon}</div>
             <div className="flex flex-col gap-1">
               <h2 className="text-xl font-medium text-sub_title">{title}</h2>
-              <h3 className="text-sub_title text-3xl font-semibold">{amount}</h3>
+              <h3 className="text-sub_title text-3xl font-semibold">
+                {amount}
+              </h3>
             </div>
           </div>
         ))}
       </div>
-      <UsersBarChart />
-      <EarningLineChart />
+      <UsersBarChart
+        totalUsersAndShopsDay={totalUsersAndShopsDay}
+        handleUserYear={handleUserYear}
+      />
+      <EarningLineChart
+        totalSellbyMonth={totalSellbyMonth}
+        handleSellerYear={handleSellerYear}
+      />
     </div>
   );
 };
