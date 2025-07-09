@@ -6,12 +6,7 @@ import { CiEdit, CiImageOn } from "react-icons/ci";
 import { imageUrl } from "../../redux/api/baseApi";
 import toast from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
-import {
-  useCreateBannerMutation,
-  useGetBannerQuery,
-  useDeleteBannerMutation,
-  useUpdateBannerMutation,
-} from "../../redux/features/bannerApi";
+import { useGetDeliveryManQuery } from "../../redux/features/deliveryManApi";
 
 const data = [
   {
@@ -237,8 +232,9 @@ const data = [
 ];
 
 const DeliveryMan = () => {
-  // const { data: bannerData, refetch } = useGetBannerQuery();
-  // console.log(bannerData?.data);
+  const { data: deliveryManData } = useGetDeliveryManQuery();
+  console.log(deliveryManData?.data?.users);
+  const deleveryMan = deliveryManData?.data?.users;
   const [page, setPage] = useState(1);
   const itemsPerPage = 8;
   // const [data, setData] = useState(null);
@@ -257,13 +253,6 @@ const DeliveryMan = () => {
   const [editImageFile, setEditImageFile] = useState(null);
   const [imgEditURL, setImgEditURL] = useState("");
   const [showCalendarFor, setShowCalendarFor] = useState(null);
-  //   const [createBanner] = useCreateBannerMutation();
-  //   const [updateBanner] = useUpdateBannerMutation();
-  //   const [deleteBanner] = useDeleteBannerMutation();
-
-  // useEffect(() => {
-  //   setData(bannerData?.data);
-  // }, [bannerData]);
 
   // Handle image upload
   const onChange = (e) => {
@@ -392,14 +381,6 @@ const DeliveryMan = () => {
 
   const columns = useMemo(
     () => [
-      //   {
-      //     title: "Serial ID",
-      //     dataIndex: "name",
-      //     key: "name",
-      //     render: (_, __, index) => (
-      //       <p>{(page - 1) * itemsPerPage + index + 1}</p>
-      //     ),
-      //   },
       {
         title: "Name",
         dataIndex: "name",
@@ -428,8 +409,8 @@ const DeliveryMan = () => {
       },
       {
         title: "Contact Number",
-        dataIndex: "contactNo",
-        key: "contactNo",
+        dataIndex: "contact",
+        key: "contact",
       },
       {
         title: "Rating",
@@ -480,15 +461,15 @@ const DeliveryMan = () => {
         title: "Status",
         dataIndex: "status",
         key: "status",
-        align: "right",
+        align: "center",
         render: (_, record) => (
-          <div className="flex justify-end pr-4">
+          <div className="pr-4">
             <button
               onClick={() => handleStatus(record)}
-              className={`w-24 rounded-md text-sm py-[2px] ${
-                record.status === "Active"
+              className={`w-24 rounded-md text-sm py-[2px] capitalize ${
+                record.status === "active"
                   ? "bg-[#B5D0CC] text-primary"
-                  : record.status === "Inactive"
+                  : record.status === "inactive"
                   ? "bg-[#FC605726] text-[#FC6057]"
                   : "bg-yellow-100 text-yellow-700"
               }`}
@@ -588,7 +569,7 @@ const DeliveryMan = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={deleveryMan}
           rowKey="_id"
           pagination={{
             current: page,
@@ -610,7 +591,6 @@ const DeliveryMan = () => {
         <div className="p-6">
           <h1 className="text-[20px] font-medium mb-3">Add Profile</h1>
           <form onSubmit={handleSubmit}>
-
             <div className="flex justify-center items-center gap-4 mb-4">
               <div className="w-1/2">
                 <label style={{ display: "block", marginBottom: "5px" }}>
@@ -790,7 +770,6 @@ const DeliveryMan = () => {
         <div className="p-6">
           <h1 className="text-[20px] font-medium mb-3">Edit Profile</h1>
           <form onSubmit={handleSubmit}>
-
             <div className="flex justify-center items-center gap-4 mb-4">
               <div className="w-1/2">
                 <label style={{ display: "block", marginBottom: "5px" }}>
