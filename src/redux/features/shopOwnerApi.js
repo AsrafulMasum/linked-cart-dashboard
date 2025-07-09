@@ -6,19 +6,22 @@ const shopOwnerApi = baseApi.injectEndpoints({
       query: () => {
         return {
           method: "GET",
-          url: "/faq/get",
+          url: "/user/shop",
         };
       },
     }),
 
     updateShopOwner: builder.mutation({
-      query: ({ id, payload }) => ({
-        method: "PUT",
-        url: `/faq/update/${id}`,
-        body: payload,
-      }),
+      query: ({ id, payload }) => {
+        return {
+          method: "PATCH",
+          url: `/user/change-status/${id}`,
+          body: payload,
+        };
+      },
     }),
   }),
 });
 
-export const {} = shopOwnerApi;
+export const { useGetShopOwnerQuery, useUpdateShopOwnerMutation } =
+  shopOwnerApi;

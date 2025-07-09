@@ -1,6 +1,11 @@
 import { ConfigProvider, Table } from "antd";
 import moment from "moment";
 import { useMemo, useState } from "react";
+import {
+  useGetShopOwnerQuery,
+  useUpdateShopOwnerMutation,
+} from "../../redux/features/shopOwnerApi";
+import toast from "react-hot-toast";
 
 const initialData = [
   {
@@ -169,26 +174,32 @@ const itemsPerPage = 9;
 
 const ShopOwner = () => {
   const [page, setPage] = useState(1);
-  const [data, setData] = useState(initialData);
+  const { data, refetch } = useGetShopOwnerQuery();
+  const shopOwner = data?.data?.users;
 
-  const handleStatus = (record) => {
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.key === record.key
-          ? {
-              ...item,
-              status:
-                item.status === "Active"
-                  ? "Inactive"
-                  : item.status === "Inactive"
-                  ? "Active"
-                  : "Active",
-            }
-          : item
-      )
-    );
+  const [updateShopOwner] = useUpdateShopOwnerMutation();
+
+  const handleStatus = async (record) => {
+    let status;
+    if (record?.status === "inactive") {
+      status = "active";
+    } else {
+      status = "inactive";
+    }
+    const data = {
+      id: record?._id,
+      payload: { status },
+    };
+    try {
+      const res = await updateShopOwner(data).unwrap();
+      if (res?.success) {
+        refetch();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.message);
+    }
   };
-
   const columns = useMemo(
     () => [
       {
@@ -198,13 +209,13 @@ const ShopOwner = () => {
       },
       {
         title: "Total Income",
-        dataIndex: "totalIncome",
-        key: "totalIncome",
+        dataIndex: "totalEarning",
+        key: "totalEarning",
       },
       {
         title: "Contact Number",
-        dataIndex: "contactNumber",
-        key: "contactNumber",
+        dataIndex: "contact",
+        key: "contact",
       },
       {
         title: "Start Date",
@@ -221,10 +232,10 @@ const ShopOwner = () => {
           <div className="flex justify-end pr-4">
             <button
               onClick={() => handleStatus(record)}
-              className={`w-24 rounded-md text-sm py-[2px] ${
-                record.status === "Active"
+              className={`w-24 rounded-md text-sm py-[2px] capitalize ${
+                record.status === "active"
                   ? "bg-[#B5D0CC] text-primary"
-                  : record.status === "Inactive"
+                  : record.status === "inactive"
                   ? "bg-[#FC605726] text-[#FC6057]"
                   : "bg-yellow-100 text-yellow-700"
               }`}
@@ -241,7 +252,11 @@ const ShopOwner = () => {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <h2 style={{ fontSize: "25px", fontWeight: "normal", color: "#0F665A" }}>Shop Owners</h2>
+        <h2
+          style={{ fontSize: "25px", fontWeight: "normal", color: "#0F665A" }}
+        >
+          Shop Owners
+        </h2>
       </div>
 
       <ConfigProvider
@@ -258,8 +273,9 @@ const ShopOwner = () => {
         }}
       >
         <Table
+          rowKey="_id"
           columns={columns}
-          dataSource={data}
+          dataSource={shopOwner}
           pagination={{
             current: page,
             pageSize: itemsPerPage,
