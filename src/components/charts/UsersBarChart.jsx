@@ -15,7 +15,7 @@ import {
 const UsersBarChart = ({ totalUsersAndShopsDay, handleUserYear }) => {
   const [selectedYear, setSelectedYear] = useState("");
   handleUserYear(selectedYear);
-  
+
   return (
     <div className="bg-secondary p-4 rounded-xl shadow-sm mb-6">
       <div className="flex justify-between items-center mb-4">
@@ -60,7 +60,7 @@ const UsersBarChart = ({ totalUsersAndShopsDay, handleUserYear }) => {
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={215}>
+      <ResponsiveContainer width="100%" height={210}>
         <BarChart data={totalUsersAndShopsDay} barSize={10}>
           <CartesianGrid vertical={false} stroke="#757575" />
           <XAxis dataKey="month" axisLine={false} tickLine={false} />

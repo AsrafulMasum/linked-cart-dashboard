@@ -10,7 +10,16 @@ const statisticsApi = baseApi.injectEndpoints({
         };
       },
     }),
+
+    analytics: builder.query({
+      query: (year) => {
+        return {
+          url: `/dashboard/analytics?userYear=${year?.userYear}&sellerYear=${year?.sellerYear}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
-export const { useStatisticsQuery } = statisticsApi;
+export const { useStatisticsQuery, useAnalyticsQuery } = statisticsApi;
