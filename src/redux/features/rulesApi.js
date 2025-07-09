@@ -9,21 +9,34 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/about",
         };
       },
-      transformResponse: ({ data }) => {
-        return data;
-      },
     }),
 
     updateAboutUs: builder.mutation({
       query: (data) => {
         return {
-          method: "PATCH",
+          method: "POST",
           url: "/rule/about",
           body: data,
         };
       },
-      transformResponse: ( data ) => {
-        return data;
+    }),
+
+    getCookiesPolicy: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: "/rule/cookie",
+        };
+      },
+    }),
+
+    updateCookiesPolicy: builder.mutation({
+      query: (data) => {
+        return {
+          method: "POST",
+          url: "/rule/cookie",
+          body: data,
+        };
       },
     }),
 
@@ -34,21 +47,15 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/privacy-policy",
         };
       },
-      transformResponse: ({ data }) => {
-        return data;
-      },
     }),
 
     updatePrivacyPolicy: builder.mutation({
       query: (data) => {
         return {
-          method: "PATCH",
+          method: "POST",
           url: "/rule/privacy-policy",
           body: data,
         };
-      },
-      transformResponse: ( data ) => {
-        return data;
       },
     }),
 
@@ -59,21 +66,34 @@ const rulesApi = baseApi.injectEndpoints({
           url: "/rule/terms-and-conditions",
         };
       },
-      transformResponse: ({ data }) => {
-        return data;
-      },
     }),
 
     updateTermsCondition: builder.mutation({
       query: (data) => {
         return {
-          method: "PATCH",
+          method: "POST",
           url: "/rule/terms-and-conditions",
           body: data,
         };
       },
-      transformResponse: ( data ) => {
-        return data;
+    }),
+
+    getRefundPolicy: builder.query({
+      query: () => {
+        return {
+          method: "GET",
+          url: "/rule/refund",
+        };
+      },
+    }),
+
+    updateRefundPolicy: builder.mutation({
+      query: (data) => {
+        return {
+          method: "POST",
+          url: "/rule/refund",
+          body: data,
+        };
       },
     }),
   }),
@@ -82,8 +102,12 @@ const rulesApi = baseApi.injectEndpoints({
 export const {
   useGetAboutUsQuery,
   useUpdateAboutUsMutation,
+  useGetCookiesPolicyQuery,
+  useUpdateCookiesPolicyMutation,
   useGetPrivacyPolicyQuery,
   useUpdatePrivacyPolicyMutation,
   useGetTermsConditionQuery,
   useUpdateTermsConditionMutation,
+  useGetRefundPolicyQuery,
+  useUpdateRefundPolicyMutation,
 } = rulesApi;

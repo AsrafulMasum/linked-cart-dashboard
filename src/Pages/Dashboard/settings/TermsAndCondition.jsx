@@ -1,27 +1,25 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { Button } from "antd";
-import {
-  useTermsAndConditionQuery,
-  useUpdateTermsAndConditionsMutation,
-} from "../../../redux/apiSlices/termsAndConditionSlice";
 import toast from "react-hot-toast";
+import {
+  useGetTermsConditionQuery,
+  useUpdateTermsConditionMutation,
+} from "../../../redux/features/rulesApi";
 
 const TermsAndCondition = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const { data: termsAndCondition, refetch } = useTermsAndConditionQuery();
-  const [updateTermsAndConditions] = useUpdateTermsAndConditionsMutation();
+  const { data: termsAndCondition, refetch } = useGetTermsConditionQuery();
+  const [updateTermsCondition] = useUpdateTermsConditionMutation();
 
   const aboutDataSave = async () => {
+    const data = { content: content };
     try {
-      await updateTermsAndConditions({
-        id: termsAndCondition?._id,
-        description: content,
-      })
+      await updateTermsCondition(data)
         .unwrap()
-        .then(({ statusCode, status, message }) => {
-          if (status) {
+        .then(({ success, message }) => {
+          if (success) {
             toast.success(message);
             refetch();
           }
@@ -32,7 +30,7 @@ const TermsAndCondition = () => {
   };
 
   useEffect(() => {
-    setContent(termsAndCondition?.description);
+    setContent(termsAndCondition?.data?.content);
   }, [termsAndCondition]);
 
   return (

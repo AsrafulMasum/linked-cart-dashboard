@@ -1,24 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { Button } from "antd";
-import {
-  usePrivacyPolicyQuery,
-  useUpdatePricyPolicyMutation,
-} from "../../../redux/apiSlices/privacyPolicySlice";
 import toast from "react-hot-toast";
+import {
+  useGetCookiesPolicyQuery,
+  useUpdateCookiesPolicyMutation,
+} from "../../../redux/features/rulesApi";
 
 const CookiesPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const { data: privacyPolicy, refetch } = usePrivacyPolicyQuery();
-  const [updatePricyPolicy, { isLoading }] = useUpdatePricyPolicyMutation();
+  const { data: cookiesPolicy, refetch } = useGetCookiesPolicyQuery();
+  const [updateCookiesPolicy, { isLoading }] = useUpdateCookiesPolicyMutation();
 
   const aboutDataSave = async () => {
+    const data = {
+      content: content,
+    };
+
     try {
-      await updatePricyPolicy({ id: privacyPolicy?._id, description: content })
+      await updateCookiesPolicy(data)
         .unwrap()
-        .then(({ statusCode, status, message }) => {
-          if (status) {
+        .then(({ success, message }) => {
+          if (success) {
             toast.success(message);
             refetch();
           }
@@ -29,8 +33,8 @@ const CookiesPolicy = () => {
   };
 
   useEffect(() => {
-    setContent(privacyPolicy?.description);
-  }, [privacyPolicy]);
+    setContent(cookiesPolicy?.data?.content);
+  }, [cookiesPolicy]);
 
   return (
     <div>

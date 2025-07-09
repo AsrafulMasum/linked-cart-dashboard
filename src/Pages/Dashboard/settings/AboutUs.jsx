@@ -1,24 +1,27 @@
 import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { Button } from "antd";
-import {
-  useAboutUsQuery,
-  useUpdateAboutUsMutation,
-} from "../../../redux/apiSlices/aboutSlice";
 import toast from "react-hot-toast";
+import {
+  useGetAboutUsQuery,
+  useUpdateAboutUsMutation,
+} from "../../../redux/features/rulesApi";
 
 const AboutUs = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const { data: aboutUs, refetch } = useAboutUsQuery({});
+  const { data: aboutUs, refetch } = useGetAboutUsQuery({});
   const [updateAboutUs, { isLoading }] = useUpdateAboutUsMutation();
 
   const aboutDataSave = async () => {
+    const data = {
+      content: content,
+    };
     try {
-      await updateAboutUs({ id: aboutUs?._id, description: content })
+      await updateAboutUs(data)
         .unwrap()
-        .then(({ status, message }) => {
-          if (status) {
+        .then(({ success, message }) => {
+          if (success) {
             toast.success(message);
             refetch();
           }
@@ -29,7 +32,7 @@ const AboutUs = () => {
   };
 
   useEffect(() => {
-    setContent(aboutUs?.description);
+    setContent(aboutUs?.data?.content);
   }, [aboutUs]);
 
   return (

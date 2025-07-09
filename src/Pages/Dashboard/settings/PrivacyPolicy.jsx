@@ -1,24 +1,27 @@
 import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import { Button } from "antd";
-import {
-  usePrivacyPolicyQuery,
-  useUpdatePricyPolicyMutation,
-} from "../../../redux/apiSlices/privacyPolicySlice";
 import toast from "react-hot-toast";
+import {
+  useGetPrivacyPolicyQuery,
+  useUpdatePrivacyPolicyMutation,
+} from "../../../redux/features/rulesApi";
 
 const PrivacyPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const { data: privacyPolicy, refetch } = usePrivacyPolicyQuery();
-  const [updatePricyPolicy, { isLoading }] = useUpdatePricyPolicyMutation();
+  const { data: privacyPolicy, refetch } = useGetPrivacyPolicyQuery();
+  const [updatePricyPolicy, { isLoading }] = useUpdatePrivacyPolicyMutation();
 
   const aboutDataSave = async () => {
+    const data = {
+      content: content,
+    };
     try {
-      await updatePricyPolicy({ id: privacyPolicy?._id, description: content })
+      await updatePricyPolicy(data)
         .unwrap()
-        .then(({ statusCode, status, message }) => {
-          if (status) {
+        .then(({ success, message }) => {
+          if (success) {
             toast.success(message);
             refetch();
           }
@@ -29,7 +32,7 @@ const PrivacyPolicy = () => {
   };
 
   useEffect(() => {
-    setContent(privacyPolicy?.description);
+    setContent(privacyPolicy?.data?.content);
   }, [privacyPolicy]);
 
   return (
