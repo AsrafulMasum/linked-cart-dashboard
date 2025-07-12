@@ -49,7 +49,7 @@ const EarningLineChart = ({totalSellbyMonth, handleSellerYear}) => {
           </ConfigProvider>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={210}>
+      <ResponsiveContainer width="100%" height={220}>
         <LineChart data={totalSellbyMonth}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />

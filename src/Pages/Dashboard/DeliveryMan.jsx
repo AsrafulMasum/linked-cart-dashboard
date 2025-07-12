@@ -73,6 +73,9 @@ const DeliveryMan = () => {
       title: "Rating",
       dataIndex: "rating",
       key: "rating",
+      render: (_, record) => {
+        return <p>{record?.rating ? Number(record.rating).toFixed(1) : "0.0"}</p>;
+      },
     },
     {
       title: "NID",

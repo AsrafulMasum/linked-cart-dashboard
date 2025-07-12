@@ -28,7 +28,7 @@ const Home = () => {
       amount: `${summury?.totalProducts}`,
       icon: (
         <img
-          className="bg-primary p-[15px] rounded-full"
+          className="bg-primary p-[15px] rounded-full h-16 w-16"
           src={totalServices}
           alt="total products icon"
         />
@@ -39,7 +39,7 @@ const Home = () => {
       amount: `${summury?.totalUsers}`,
       icon: (
         <img
-          className="bg-primary p-[15px] rounded-full"
+          className="bg-primary p-[15px] rounded-full h-16 w-16"
           src={totalUsers}
           alt="total users icon"
         />
@@ -50,7 +50,7 @@ const Home = () => {
       amount: `${summury?.totalEarnings}`,
       icon: (
         <img
-          className="bg-primary p-[15px] rounded-full"
+          className="bg-primary p-[15px] rounded-full h-16 w-16"
           src={earnings}
           alt="earnings icon"
         />
@@ -61,7 +61,7 @@ const Home = () => {
       amount: `${summury?.totalOrders}`,
       icon: (
         <img
-          className="bg-primary p-[15px] rounded-full"
+          className="bg-primary p-[15px] rounded-full h-16 w-16"
           src={orders}
           alt="earnings icon"
         />
@@ -72,7 +72,7 @@ const Home = () => {
       amount: `${summury?.totalSolds}`,
       icon: (
         <img
-          className="bg-primary p-[15px] rounded-full"
+          className="bg-primary p-[15px] rounded-full h-16 w-16"
           src={sold}
           alt="earnings icon"
         />
@@ -86,9 +86,9 @@ const Home = () => {
         {statistics.map(({ title, amount, icon }) => (
           <div
             key={title}
-            className="bg-secondary rounded-lg p-[25px] flex items-center gap-4"
+            className="bg-secondary rounded-lg py-8 pl-8 flex items-center gap-4"
           >
-            <div>{icon}</div>
+            <div className="w-16 h-16">{icon}</div>
             <div className="flex flex-col gap-1">
               <h2 className="text-xl font-medium text-sub_title">{title}</h2>
               <h3 className="text-sub_title text-3xl font-semibold">

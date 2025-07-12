@@ -3,14 +3,11 @@ import { baseApi } from "../api/baseApi";
 const notificationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getNotifications: builder.query({
-      query: () => {
+      query: (page) => {
         return {
-          url: "/notification",
+          url: `/notification?limit=7&page=${page}`,
           method: "GET",
         };
-      },
-      transformResponse: ({ data }) => {
-        return data;
       },
     }),
 

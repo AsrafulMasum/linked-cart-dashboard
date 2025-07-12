@@ -11,13 +11,8 @@ import { formatDistanceToNow } from "date-fns";
 const Notifications = () => {
   const [page, setPage] = useState(1);
   const pageSize = 7;
-  const { data: notificationData, refetch } = useGetNotificationsQuery();
+  const { data: notificationData, refetch } = useGetNotificationsQuery(page);
   const [readNotification] = useReadNotificationMutation();
-  const total = notificationData?.notifications?.length || 0;
-  const paginatedData = notificationData?.notifications?.slice(
-    (page - 1) * pageSize,
-    (page - 1) * pageSize + pageSize
-  );
   console.log(notificationData);
   const handleRead = async () => {
     try {
@@ -30,8 +25,6 @@ const Notifications = () => {
       toast.error(error?.data?.message);
     }
   };
-
-  const handlePageChange = (page) => setPage(page);
 
   return (
     <div>
@@ -46,7 +39,7 @@ const Notifications = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-5">
-        {paginatedData?.map((notification, index) => (
+        {notificationData?.data?.notifications?.map((notification, index) => (
           <div
             key={notification?._id}
             className={`p-3 rounded-lg flex items-center gap-3 ${
@@ -94,10 +87,10 @@ const Notifications = () => {
         >
           <Pagination
             current={page}
-            total={total}
-            onChange={handlePageChange}
+            total={notificationData?.data?.pagination?.total}
             showQuickJumper={false}
             showSizeChanger={false}
+            onChange={(page) => setPage(page)}
           />
         </ConfigProvider>
       </div>
