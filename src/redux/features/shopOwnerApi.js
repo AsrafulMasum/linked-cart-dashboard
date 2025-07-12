@@ -3,10 +3,10 @@ import { baseApi } from "../api/baseApi";
 const shopOwnerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getShopOwner: builder.query({
-      query: () => {
+      query: (page) => {
         return {
           method: "GET",
-          url: "/user/shop",
+          url: `/user/shop?page=${page}`,
         };
       },
     }),

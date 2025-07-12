@@ -4,13 +4,13 @@ import { useMemo, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { useGetEarningsQuery } from "../../redux/features/earningsApi";
 
-const itemsPerPage = 9;
+const itemsPerPage = 10;
 
 const Earnings = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
 
-  const { data: ordersData } = useGetEarningsQuery();
+  const { data: ordersData } = useGetEarningsQuery(page);
   const orders = ordersData?.data?.orders;
 
   const handleInfoClick = (record) => {
@@ -104,9 +104,10 @@ const Earnings = () => {
           dataSource={orders}
           rowKey="_id"
           pagination={{
+            total: ordersData?.pagination?.total,
             current: page,
             pageSize: itemsPerPage,
-            onChange: setPage,
+            onChange: (page) => setPage(page),
           }}
           className="custom-table"
         />

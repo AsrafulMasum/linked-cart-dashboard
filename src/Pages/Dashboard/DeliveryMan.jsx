@@ -8,11 +8,10 @@ import {
 } from "../../redux/features/deliveryManApi";
 
 const DeliveryMan = () => {
-  const { data: deliveryManData, refetch } = useGetDeliveryManQuery();
-  console.log(deliveryManData?.data?.users);
-  const deleveryMan = deliveryManData?.data?.users;
   const [page, setPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
+  const { data: deliveryManData, refetch } = useGetDeliveryManQuery(page);
+  const deleveryMan = deliveryManData?.data?.users;
   const [updateDeliveryMan] = useUpdateDeliveryManMutation();
 
   const handleStatus = async (record) => {
@@ -166,7 +165,7 @@ const DeliveryMan = () => {
         theme={{
           components: {
             Pagination: {
-              itemActiveBg: "#3536FF",
+              itemActiveBg: "#0F665A",
               borderRadius: "100%",
             },
           },
@@ -180,9 +179,10 @@ const DeliveryMan = () => {
           dataSource={deleveryMan}
           rowKey="_id"
           pagination={{
+            total: deliveryManData?.data?.pagination?.total,
             current: page,
             pageSize: itemsPerPage,
-            onChange: setPage,
+            onChange: (page) => setPage(page),
           }}
           className="custom-table"
         />

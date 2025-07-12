@@ -3,23 +3,13 @@ import { baseApi } from "../api/baseApi";
 export const deliveryManApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getDeliveryMan: builder.query({
-      query: () => {
+      query: (page) => {
         return {
           method: "GET",
-          url: "/user/shopper",
+          url: `/user/shopper?page=${page}`,
         };
       },
     }),
-
-    // createDeliveryMan: builder.mutation({
-    //   query: (payload) => {
-    //     return {
-    //       method: "POST",
-    //       url: "/offer",
-    //       body: payload,
-    //     };
-    //   },
-    // }),
 
     updateDeliveryMan: builder.mutation({
       query: ({ id, payload }) => {
@@ -30,15 +20,6 @@ export const deliveryManApi = baseApi.injectEndpoints({
         };
       },
     }),
-
-    // deleteDeliveryMan: builder.mutation({
-    //   query: (id) => {
-    //     return {
-    //       method: "DELETE",
-    //       url: `/offer/${id}`,
-    //     };
-    //   },
-    // }),
   }),
 });
 

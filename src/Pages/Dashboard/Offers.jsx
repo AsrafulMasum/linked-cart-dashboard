@@ -1,12 +1,11 @@
 import { Button, Calendar, ConfigProvider, Modal, Table } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import deleteIcon from "../../assets/delete.svg";
 import { PlusOutlined } from "@ant-design/icons";
 import { CiEdit, CiImageOn } from "react-icons/ci";
 import { imageUrl } from "../../redux/api/baseApi";
 import toast from "react-hot-toast";
 import moment from "moment";
-import { FaRegEdit } from "react-icons/fa";
 import {
   useCreateOfferMutation,
   useDeleteOfferMutation,
@@ -18,8 +17,6 @@ import dayjs from "dayjs";
 const Offers = () => {
   const { data: offersData, refetch } = useGetOffersQuery();
   const offers = offersData?.data;
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 8;
   const [value, setValue] = useState(null);
   const [openAddModel, setOpenAddModel] = useState(false);
   const [openEditModel, setOpenEditModel] = useState(false);
@@ -193,79 +190,74 @@ const Offers = () => {
     }
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        title: "Serial ID",
-        dataIndex: "name",
-        key: "name",
-        render: (_, __, index) => (
-          <p>{(page - 1) * itemsPerPage + index + 1}</p>
-        ),
-      },
-      {
-        title: "Offer Image",
-        dataIndex: "image",
-        key: "image",
-        render: (_, record) => (
-          <div>
-            <img
-              className="h-8 w-16 object-cover"
-              src={
-                record?.image && record?.image.startsWith("https")
-                  ? record?.image
-                  : record?.image
-                  ? `${imageUrl}${record?.image}`
-                  : "/default-avatar.png"
-              }
-              alt=""
-            />
-          </div>
-        ),
-      },
-      {
-        title: "Offer Name",
-        dataIndex: "name",
-        key: "name",
-      },
-      {
-        title: "Start Date",
-        dataIndex: "startDate",
-        key: "startDate",
-        render: (_, record) => <p>{moment(record?.startDate).format("L")}</p>,
-      },
-      {
-        title: "End Date",
-        dataIndex: "endDate",
-        key: "endDate",
-        render: (_, record) => <p>{moment(record?.endDate).format("L")}</p>,
-      },
-      {
-        title: "Actions",
-        dataIndex: "actions",
-        key: "actions",
-        align: "right",
-        render: (_, record) => (
-          <div className="flex justify-end gap-8">
-            <CiEdit
-              className="cursor-pointer text-2xl text-[#F78F08]"
-              onClick={() => openEditModal(record)}
-            />
-            <img
-              className="cursor-pointer"
-              onClick={() => {
-                setDeleteId(record?._id);
-                setShowDelete(true);
-              }}
-              src={deleteIcon}
-              alt="Delete Icon"
-            />
-          </div>
-        ),
-      },
-    ],
-    [page, itemsPerPage]
-  );
+  const columns = [
+    {
+      title: "Serial ID",
+      dataIndex: "name",
+      key: "name",
+      render: (_, __, index) => <p>{index + 1}</p>,
+    },
+    {
+      title: "Offer Image",
+      dataIndex: "image",
+      key: "image",
+      render: (_, record) => (
+        <div>
+          <img
+            className="h-8 w-16 object-cover"
+            src={
+              record?.image && record?.image.startsWith("https")
+                ? record?.image
+                : record?.image
+                ? `${imageUrl}${record?.image}`
+                : "/default-avatar.png"
+            }
+            alt=""
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Offer Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Start Date",
+      dataIndex: "startDate",
+      key: "startDate",
+      render: (_, record) => <p>{moment(record?.startDate).format("L")}</p>,
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDate",
+      key: "endDate",
+      render: (_, record) => <p>{moment(record?.endDate).format("L")}</p>,
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+      align: "right",
+      render: (_, record) => (
+        <div className="flex justify-end gap-8">
+          <CiEdit
+            className="cursor-pointer text-2xl text-[#F78F08]"
+            onClick={() => openEditModal(record)}
+          />
+          <img
+            className="cursor-pointer"
+            onClick={() => {
+              setDeleteId(record?._id);
+              setShowDelete(true);
+            }}
+            src={deleteIcon}
+            alt="Delete Icon"
+          />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -317,7 +309,7 @@ const Offers = () => {
         theme={{
           components: {
             Pagination: {
-              itemActiveBg: "#3536FF",
+              itemActiveBg: "#0F665A",
               borderRadius: "100%",
             },
           },
@@ -330,11 +322,7 @@ const Offers = () => {
           columns={columns}
           dataSource={offers}
           rowKey="_id"
-          pagination={{
-            current: page,
-            pageSize: itemsPerPage,
-            onChange: setPage,
-          }}
+          pagination={false}
           className="custom-table"
         />
       </ConfigProvider>

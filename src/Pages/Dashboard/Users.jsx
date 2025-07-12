@@ -6,12 +6,12 @@ import { FiSearch } from "react-icons/fi";
 import { useGetUsersQuery } from "../../redux/features/usersApi";
 import { imageUrl } from "../../redux/api/baseApi";
 
-const itemsPerPage = 9;
+const itemsPerPage = 10;
 
 const Users = () => {
   const [srcText, setSrcText] = useState("");
-  const { data: usersData } = useGetUsersQuery(srcText);
   const [page, setPage] = useState(1);
+  const { data: usersData } = useGetUsersQuery({srcText, page});
   const [value, setValue] = useState(null);
   const users = usersData?.data;
 
@@ -140,9 +140,10 @@ const Users = () => {
           columns={columns}
           dataSource={users}
           pagination={{
+            total: usersData?.pagination?.total,
             current: page,
             pageSize: itemsPerPage,
-            onChange: setPage,
+            onChange: (page) => setPage(page),
           }}
           className="custom-table"
         />

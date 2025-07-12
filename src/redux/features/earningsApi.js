@@ -3,9 +3,9 @@ import { baseApi } from "../api/baseApi";
 const earningsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getEarnings: builder.query({
-      query: () => {
+      query: (page) => {
         return {
-          url: "/order/admin-orders?status=Delivered",
+          url: `/order/admin-orders?page=${page}&status=Delivered`,
           method: "GET",
         };
       },

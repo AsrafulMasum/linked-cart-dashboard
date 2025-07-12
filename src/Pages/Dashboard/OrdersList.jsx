@@ -1,20 +1,21 @@
 import { ConfigProvider, Modal, Select, Table } from "antd";
 import moment from "moment";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { CiUser } from "react-icons/ci";
 import { IoCalendarOutline, IoEyeOutline } from "react-icons/io5";
-import card from "../../assets/card.svg";
 import { useGetOrderListQuery } from "../../redux/features/orderListApi";
 import { imageUrl } from "../../redux/api/baseApi";
 
-const itemsPerPage = 9;
+const itemsPerPage = 10;
 
 const OrdersList = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
   const [statusFilter, setStatusFilter] = useState("");
-
-  const { data: orderLists } = useGetOrderListQuery(statusFilter);
+  const { data: orderLists } = useGetOrderListQuery({
+    status: statusFilter,
+    page,
+  });
   const orders = orderLists?.data?.orders;
 
   const handleInfoClick = (record) => {
@@ -184,9 +185,11 @@ const OrdersList = () => {
           dataSource={orders}
           rowKey="_id"
           pagination={{
+            total: orderLists?.pagination?.total,
             current: page,
             pageSize: itemsPerPage,
-            onChange: setPage,
+            showSizeChanger: false,
+            onChange: (page) => setPage(page),
           }}
           className="custom-table"
         />
