@@ -22,7 +22,7 @@ const RetailShops = () => {
       <div className="grid grid-cols-5 gap-6">
         {shops?.map((item) => (
           <div key={item._id} className="flex flex-col items-center gap-5">
-            <img
+            <img className="w-60 h-32 object-cover"
               src={
                 item?.profile && item?.profile.startsWith("http")
                   ? item?.profile

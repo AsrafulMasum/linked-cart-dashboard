@@ -102,6 +102,7 @@ const Earnings = () => {
         <Table
           columns={columns}
           dataSource={orders}
+          rowKey="_id"
           pagination={{
             current: page,
             pageSize: itemsPerPage,
@@ -110,7 +111,7 @@ const Earnings = () => {
           className="custom-table"
         />
       </ConfigProvider>
-      
+
       {/* deatils modal */}
       <Modal centered open={!!value} onCancel={handleModalClose} footer={false}>
         <div>

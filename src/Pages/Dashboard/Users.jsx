@@ -14,7 +14,7 @@ const Users = () => {
   const [page, setPage] = useState(1);
   const [value, setValue] = useState(null);
   const users = usersData?.data;
-  
+
   const handleSearchChange = (e) => {
     e.preventDefault();
     setSrcText(e.target.value);
@@ -136,6 +136,7 @@ const Users = () => {
         }}
       >
         <Table
+          rowKey="_id"
           columns={columns}
           dataSource={users}
           pagination={{

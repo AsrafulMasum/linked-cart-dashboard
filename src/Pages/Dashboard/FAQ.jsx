@@ -23,7 +23,7 @@ const FAQ = () => {
   const [showDelete, setShowDelete] = useState(false);
   const [currentId, setCurrentId] = useState("");
   const [form, setForm] = useState({ question: "", ans: "" });
-  console.log(data);
+
   useEffect(() => {
     setFaqData(data?.data);
   }, [data]);

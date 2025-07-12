@@ -20,7 +20,7 @@ const BestSellerChart = ({ topResellers }) => {
           >
             <div className="flex items-center gap-4">
               <img
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 object-cover rounded-full"
                 src={
                   seller?.shop?.profile &&
                   seller?.shop?.profile.startsWith("http")

@@ -11,35 +11,36 @@ export const deliveryManApi = baseApi.injectEndpoints({
       },
     }),
 
-    createDeliveryMan: builder.mutation({
-      query: (payload) => {
+    // createDeliveryMan: builder.mutation({
+    //   query: (payload) => {
+    //     return {
+    //       method: "POST",
+    //       url: "/offer",
+    //       body: payload,
+    //     };
+    //   },
+    // }),
+
+    updateDeliveryMan: builder.mutation({
+      query: ({ id, payload }) => {
         return {
-          method: "POST",
-          url: "/offer",
+          method: "PATCH",
+          url: `/user/change-status/${id}`,
           body: payload,
         };
       },
     }),
 
-    updateDeliveryMan: builder.mutation({
-      query: (data) => {
-        return {
-          method: "PATCH",
-          url: `/offer/${data.id}`,
-          body: data?.body,
-        };
-      },
-    }),
-
-    deleteDeliveryMan: builder.mutation({
-      query: (id) => {
-        return {
-          method: "DELETE",
-          url: `/offer/${id}`,
-        };
-      },
-    }),
+    // deleteDeliveryMan: builder.mutation({
+    //   query: (id) => {
+    //     return {
+    //       method: "DELETE",
+    //       url: `/offer/${id}`,
+    //     };
+    //   },
+    // }),
   }),
 });
 
-export const { useGetDeliveryManQuery } = deliveryManApi;
+export const { useGetDeliveryManQuery, useUpdateDeliveryManMutation } =
+  deliveryManApi;

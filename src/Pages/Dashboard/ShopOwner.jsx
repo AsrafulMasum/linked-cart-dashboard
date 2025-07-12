@@ -194,12 +194,14 @@ const ShopOwner = () => {
       const res = await updateShopOwner(data).unwrap();
       if (res?.success) {
         refetch();
+        toast.success(res?.message)
       }
     } catch (error) {
       console.log(error);
       toast.error(error?.data?.message);
     }
   };
+  
   const columns = useMemo(
     () => [
       {
