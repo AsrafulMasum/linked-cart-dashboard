@@ -25,12 +25,13 @@ import ShopOwner from "../Pages/Dashboard/ShopOwner";
 import Analytics from "../Pages/Dashboard/Analytics";
 import Offers from "../Pages/Dashboard/Offers";
 import DeliveryMan from "../Pages/Dashboard/DeliveryMan";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    // element: <ProtectedRoute><Main /></ProtectedRoute> ,
-    element: <Main />,
+    element: <ProtectedRoute><Main /></ProtectedRoute>,
+    // element: <Main />,
     children: [
       {
         path: "/",

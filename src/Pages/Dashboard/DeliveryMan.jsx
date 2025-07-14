@@ -14,7 +14,7 @@ const DeliveryMan = () => {
   const deliveryMan = deliveryManData?.data?.users;
   const [updateDeliveryMan] = useUpdateDeliveryManMutation();
   const [modalOpen, setModalOpen] = useState("");
-  console.log(deliveryMan);
+
   const handleStatus = async (record) => {
     let status;
     if (record?.status === "inactive") {
@@ -37,7 +37,7 @@ const DeliveryMan = () => {
       toast.error(error?.data?.message);
     }
   };
-  console.log(modalOpen);
+
   const columns = [
     {
       title: "Name",

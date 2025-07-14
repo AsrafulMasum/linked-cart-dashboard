@@ -1,13 +1,14 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useProfileQuery } from "../redux/apiSlices/authSlice";
 import { Spin } from "antd";
+import { useProfileQuery } from "../redux/features/authApi";
+import { AiOutlineLoading } from "react-icons/ai";
 
-const PrivateRoute = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const location = useLocation();
   const { data: profile, isLoading, isError, isFetching } = useProfileQuery();
 
   if (isLoading || isFetching) {
-    return <div> <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} /></div>;
+    return <div> <Spin indicator={<AiOutlineLoading style={{ fontSize: 48 }} spin />} /></div>;
   }
 
   if (isError) {
@@ -15,8 +16,8 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (
-    profile?.role &&
-    (profile?.role === "ADMIN" || profile?.role === "SUPER_ADMIN")
+    profile?.data?.role &&
+    (profile?.data?.role === "ADMIN" || profile?.data?.role === "SUPER_ADMIN")
   ) {
     return children;
   }
@@ -24,4 +25,4 @@ const PrivateRoute = ({ children }) => {
   return <Navigate to="/auth/login" state={{ from: location }} />;
 };
 
-export default PrivateRoute;
+export default ProtectedRoute;
