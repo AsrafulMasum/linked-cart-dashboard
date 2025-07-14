@@ -86,12 +86,12 @@ const Home = () => {
         {statistics.map(({ title, amount, icon }) => (
           <div
             key={title}
-            className="bg-secondary rounded-lg py-8 pl-8 flex items-center gap-4"
+            className="bg-secondary rounded-lg py-8 pl-5 flex items-center gap-4"
           >
-            <div className="w-16 h-16">{icon}</div>
+            <div>{icon}</div>
             <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-medium text-sub_title">{title}</h2>
-              <h3 className="text-sub_title text-3xl font-semibold">
+              <h2 className="text-lg font-medium text-sub_title">{title}</h2>
+              <h3 className="text-sub_title text-2xl font-semibold">
                 {amount}
               </h3>
             </div>

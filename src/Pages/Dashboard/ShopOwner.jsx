@@ -47,6 +47,11 @@ const ShopOwner = () => {
         key: "name",
       },
       {
+        title: "Email",
+        dataIndex: "email",
+        key: "email",
+      },
+      {
         title: "Total Income",
         dataIndex: "totalEarning",
         key: "totalEarning",

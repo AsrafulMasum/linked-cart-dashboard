@@ -1,4 +1,4 @@
-import { ConfigProvider, Table } from "antd";
+import { ConfigProvider, Modal, Table } from "antd";
 import { useState } from "react";
 import { imageUrl } from "../../redux/api/baseApi";
 import toast from "react-hot-toast";
@@ -11,9 +11,10 @@ const DeliveryMan = () => {
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
   const { data: deliveryManData, refetch } = useGetDeliveryManQuery(page);
-  const deleveryMan = deliveryManData?.data?.users;
+  const deliveryMan = deliveryManData?.data?.users;
   const [updateDeliveryMan] = useUpdateDeliveryManMutation();
-
+  const [modalOpen, setModalOpen] = useState("");
+  console.log(deliveryMan);
   const handleStatus = async (record) => {
     let status;
     if (record?.status === "inactive") {
@@ -36,7 +37,7 @@ const DeliveryMan = () => {
       toast.error(error?.data?.message);
     }
   };
-
+  console.log(modalOpen);
   const columns = [
     {
       title: "Name",
@@ -47,10 +48,10 @@ const DeliveryMan = () => {
           <img
             className="h-8 w-8 rounded-full object-cover"
             src={
-              record?.image && record?.image.startsWith("https")
-                ? record?.image
-                : record?.image
-                ? `${imageUrl}${record?.image}`
+              record?.profile && record?.profile.startsWith("https")
+                ? record?.profile
+                : record?.profile
+                ? `${imageUrl}${record?.profile}`
                 : "/default-avatar.png"
             }
             alt=""
@@ -74,7 +75,9 @@ const DeliveryMan = () => {
       dataIndex: "rating",
       key: "rating",
       render: (_, record) => {
-        return <p>{record?.rating ? Number(record.rating).toFixed(1) : "0.0"}</p>;
+        return (
+          <p>{record?.rating ? Number(record.rating).toFixed(1) : "0.0"}</p>
+        );
       },
     },
     {
@@ -82,18 +85,23 @@ const DeliveryMan = () => {
       dataIndex: "nid",
       key: "nid",
       render: (_, record) => (
-        <div>
-          <img
-            className="h-8 w-16 object-cover"
-            src={
-              record?.image && record?.image.startsWith("https")
-                ? record?.image
-                : record?.image
-                ? `${imageUrl}${record?.image}`
-                : "/default-avatar.png"
-            }
-            alt=""
-          />
+        <div
+          className="cursor-pointer"
+          onClick={() => setModalOpen(record?.nid_image)}
+        >
+          {record?.nid_image ? (
+            <img
+              className="h-8 w-16 object-cover"
+              src={
+                record?.nid_image && record?.nid_image.startsWith("https")
+                  ? record?.nid_image
+                  : `${imageUrl}${record?.nid_image}`
+              }
+              alt=""
+            />
+          ) : (
+            <p className="text-gray-500">No License</p>
+          )}
         </div>
       ),
     },
@@ -102,18 +110,24 @@ const DeliveryMan = () => {
       dataIndex: "drivingLicense",
       key: "drivingLicense",
       render: (_, record) => (
-        <div>
-          <img
-            className="h-8 w-16 object-cover"
-            src={
-              record?.image && record?.image.startsWith("https")
-                ? record?.image
-                : record?.image
-                ? `${imageUrl}${record?.image}`
-                : "/default-avatar.png"
-            }
-            alt=""
-          />
+        <div
+          className="cursor-pointer"
+          onClick={() => setModalOpen(record?.driverLicense)}
+        >
+          {record?.driverLicense ? (
+            <img
+              className="h-8 w-16 object-cover"
+              src={
+                record?.driverLicense &&
+                record?.driverLicense.startsWith("https")
+                  ? record?.driverLicense
+                  : `${imageUrl}${record?.driverLicense}`
+              }
+              alt=""
+            />
+          ) : (
+            <p className="text-gray-500">No License</p>
+          )}
         </div>
       ),
     },
@@ -179,7 +193,7 @@ const DeliveryMan = () => {
       >
         <Table
           columns={columns}
-          dataSource={deleveryMan}
+          dataSource={deliveryMan}
           rowKey="_id"
           pagination={{
             total: deliveryManData?.data?.pagination?.total,
@@ -190,6 +204,26 @@ const DeliveryMan = () => {
           className="custom-table"
         />
       </ConfigProvider>
+
+      <Modal
+        centered
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        width={800}
+        footer={false}
+      >
+        <div className="p-6 flex justify-center items-center">
+          <img
+            className="h-[400px] object-cover"
+            src={
+              modalOpen && modalOpen.startsWith("https")
+                ? modalOpen
+                : `${imageUrl}${modalOpen}`
+            }
+            alt=""
+          />
+        </div>
+      </Modal>
     </>
   );
 };
