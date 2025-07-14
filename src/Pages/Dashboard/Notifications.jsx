@@ -10,10 +10,8 @@ import { formatDistanceToNow } from "date-fns";
 
 const Notifications = () => {
   const [page, setPage] = useState(1);
-  const pageSize = 7;
   const { data: notificationData, refetch } = useGetNotificationsQuery(page);
   const [readNotification] = useReadNotificationMutation();
-  console.log(notificationData);
   const handleRead = async () => {
     try {
       const { success, message } = await readNotification().unwrap();

@@ -52,14 +52,14 @@ const ShopOwner = () => {
         key: "email",
       },
       {
-        title: "Total Income",
-        dataIndex: "totalEarning",
-        key: "totalEarning",
-      },
-      {
         title: "Contact Number",
         dataIndex: "contact",
         key: "contact",
+      },
+      {
+        title: "Total Income",
+        dataIndex: "totalEarning",
+        key: "totalEarning",
       },
       {
         title: "Start Date",

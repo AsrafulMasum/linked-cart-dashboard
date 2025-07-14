@@ -57,6 +57,7 @@ const Earnings = () => {
         title: "Amount",
         dataIndex: "price",
         key: "price",
+        render: (_, record) => <p>${record?.price}</p>,
       },
       {
         title: "Actions",
@@ -134,7 +135,7 @@ const Earnings = () => {
               <p className="pb-[5px] text-right">
                 {value?.createdAt ? moment(value.createdAt).format("L") : ""}
               </p>
-              <p className="text-right">{value?.price || "Not Added Yet"}</p>
+              <p className="text-right">${value?.price || "Not Added Yet"}</p>
             </div>
           </div>
         </div>

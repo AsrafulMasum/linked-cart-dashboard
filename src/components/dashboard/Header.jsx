@@ -10,6 +10,7 @@ const Header = () => {
   const { data } = useProfileQuery();
   const user = data?.data;
   const { data: notificationData } = useGetNotificationsQuery();
+  console.log(notificationData?.data?.unreadCount);
 
   const src =
     user?.profile && user?.profile.startsWith("http")
@@ -21,7 +22,7 @@ const Header = () => {
   return (
     <div className="flex items-center gap-8 justify-end bg-secondary h-20 mt-8 ml-14 mr-6 rounded-lg p-5">
       <Link to="/notification" className="h-fit mt-[10px]">
-        <Badge count={notificationData?.unreadCount}>
+        <Badge count={notificationData?.data?.unreadCount}>
           <FaRegBell color="#757575" size={20} />
         </Badge>
       </Link>
